@@ -1,4 +1,3 @@
-pom.xml
-*jar
-lib
-classes
+/build
+/lib
+/pom.xml

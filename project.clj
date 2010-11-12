@@ -1,5 +1,7 @@
 (defproject robust-txt "1.0.0-SNAPSHOT"
   :description "A robots.txt parser."
+  :jar-dir "build"
+  :compile-path "build/classes"
   :repositories
     {"clojars" "http://clojars.org/repo"
      "lousycoder" "http://maven.lousycoder.com"}
