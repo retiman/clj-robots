@@ -1,6 +1,8 @@
 (ns robust-txt.test.core
-  (:use [robust-txt.core] :reload)
-  (:use [clojure.test]))
+  (:use
+    [robust-txt.core]
+    [robust-txt.utils :only (load-resource)]
+    [clojure.test]))
 
 (def keyvals
   (seq (vector {:allow "/images/foo.jpg"}
