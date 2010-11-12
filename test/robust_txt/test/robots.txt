@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /images/foo.jpg # This is a comment!
+Disallow: /cgi-bin/
+Disallow: /images/ # This is another comment!
+Disallow: /tmp/
+
+Disallow: /private/
+Crawl-delay: 10
+Request-rate: 10
+# Here's another comment!
+

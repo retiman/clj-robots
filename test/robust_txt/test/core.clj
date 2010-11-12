@@ -31,7 +31,7 @@
     (is (= expected (process-keyvals keyvals)))))
 
 (deftest test-process-robots-txt
-  (let [stream (load-resource "raven/test/robots.txt")
+  (let [stream (load-resource "robust_txt/test/robots.txt")
         directives (process-robots-txt stream)]
     (do
       (is (= 10 (directives :crawl-delay)))
@@ -44,7 +44,7 @@
       (is (= #{"" "/search"} (directives :disallow)))))
 
 (deftest test-process-robots-bad-txt
-  (let [stream (load-resource "raven/test/robots-bad.txt")
+  (let [stream (load-resource "robust_txt/test/robots-bad.txt")
         directives (process-robots-txt stream)]
     (do
       (is (= 2 (count directives))
