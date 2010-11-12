@@ -1,6 +1,7 @@
 (ns robust-txt.core
   (:require
-    [clojure.contrib.io :as io])
+    [clojure.contrib.io :as io]
+    [clojure.contrib.str-utils2 :as s])
   (:gen-class))
 
 (def int-keys #{:crawl-delay :request-rate})
