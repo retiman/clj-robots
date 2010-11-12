@@ -1,5 +1,6 @@
 (ns robust-txt.core
   (:require
+    [robust-txt.utils :as util]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as s])
   (:gen-class))
@@ -58,13 +59,18 @@
 (defmulti process-robots-txt class)
 
 (defmethod process-robots-txt java.io.InputStream [stream]
-    (process-robots-txt (ru/stream-to-string stream)))
+    (process-robots-txt (util/stream-to-string stream)))
 
 (defmethod process-robots-txt String [s]
   (let [lines (s/split-lines s)
         pairs (process-lines lines)
         keyvals (process-pairs pairs)]
     (process-keyvals keyvals)))
+
+(defn matches-url?
+  "Finds out whether or not a URL is allowed or disallowed."
+  [directives k url]
+  (some #(. url startsWith %) (directives k)))
 
 (comment Google's crawler evaluates all allowed patterns, and then it processes
          all disallowed patterns.  The same strategy is used here.)
