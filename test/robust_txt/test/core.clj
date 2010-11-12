@@ -1,5 +1,5 @@
 (ns robust-txt.test.core
-  (:use [raven.robots] :reload)
+  (:use [robust-txt.core] :reload)
   (:use [clojure.test]))
 
 (def keyvals
