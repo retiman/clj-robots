@@ -7,4 +7,6 @@
 (deftest test-parse-line
   (do
     (is (= ["user-agent" ":*:"]
-           (parse-line "UsEr-AgEnt: :*:# This is a comment")))))
+           (parse-line "UsEr-AgEnt: :*:# This is a comment")))
+    (is (nil? (parse-line "user-agent*")))
+    (is (nil? (parse-line "")))))
