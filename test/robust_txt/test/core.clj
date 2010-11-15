@@ -39,3 +39,7 @@
     (do
       (is (contains? directives :modified-time))
       (is (= expected result)))))
+
+(deftest test-parse-lines-no-content
+  (is (= {"*" []}
+         (dissoc (parse-lines [""]) :modified-time))))
