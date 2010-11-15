@@ -73,7 +73,7 @@
         (alter directives assoc :modified-time (System/currentTimeMillis)))
       @directives)))
 
-(defn get-robots-txt
+(defn get-robots
   [url]
   (try
     (let [domain (. (io/as-url url) getHost)
@@ -83,9 +83,11 @@
 
 (defn crawlable-by-standard?
   [directives user-agent path]
-  (let [permissions (filter #(= :disallow (first %))
-                            (get directives user-agent))]
-    (nil? (some #(. path startsWith (last %)) permissions))))
+  (if (nil? directives)
+    true
+    (let [permissions (filter #(= :disallow (first %))
+                              (get directives user-agent))]
+      (nil? (some #(. path startsWith (last %)) permissions)))))
 
 (defn crawlable-by-google?
   [directives user-agent path]
