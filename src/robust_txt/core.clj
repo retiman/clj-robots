@@ -83,11 +83,9 @@
 
 (defn crawlable-by-standard?
   [directives user-agent path]
-  (if (nil? directives)
-    true
-    (let [permissions (filter #(= :disallow (first %))
-                              (get directives user-agent))]
-      (nil? (some #(. path startsWith (last %)) permissions)))))
+  (let [permissions (filter #(= :disallow (first %))
+                            (get directives user-agent))]
+    (nil? (some #(. path startsWith (last %)) permissions))))
 
 (defn crawlable-by-google?
   [directives user-agent path]
@@ -100,6 +98,7 @@
 (defn crawlable?
   [directives user-agent path & {:keys [strategy] :or [strategy :standard]}]
   (cond
+    (nil? directives) true
     (= strategy :google) (crawlable-by-google? directives user-agent path)
     (= strategy :bing) (crawlable-by-bing? directives user-agent path)
     :default (crawlable-by-standard? directives user-agent path)))
