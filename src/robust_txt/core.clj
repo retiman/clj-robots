@@ -16,27 +16,27 @@
 
 
 (defn process-user-agent
-  [result user-agent value]
+  [directives user-agent value]
   (dosync
     (ref-set user-agent value)
-    (alter result assoc @user-agent [])))
+    (alter directives assoc @user-agent [])))
 
 (defn process-allow
-  [result user-agent value]
+  [directives user-agent value]
   (dosync
-    (let [permissions (@result @user-agent)]
-      (alter result
+    (let [permissions (@directives @user-agent)]
+      (alter directives
              assoc @user-agent (vec (conj permissions [:allow value]))))))
 
 (defn process-disallow
-  [result user-agent value]
+  [directives user-agent value]
   (dosync
-    (let [permissions (@result @user-agent)]
-      (alter result
+    (let [permissions (@directives @user-agent)]
+      (alter directives
              assoc @user-agent (vec (conj permissions [:disallow value]))))))
 
 (defn process-directive
-  [result key value]
+  [directives key value]
   (let [processed-value (if (contains? #{"crawl-delay" "request-rate"} key)
                           (try (Integer/parseInt value)
                             (catch NumberFormatException e nil))
@@ -44,7 +44,7 @@
     (if (nil? processed-value)
       nil
       (dosync
-        (alter result assoc (keyword key) processed-value)))))
+        (alter directives assoc (keyword key) processed-value)))))
 
 (defn parse-line
   [line]
@@ -56,7 +56,7 @@
 (defn parse-lines
   [lines]
   (let [user-agent (ref "*")
-        result (ref {})]
+        directives (ref {})]
     (do
       (doseq [line lines]
         (let [[key value] (parse-line line)]
@@ -64,16 +64,16 @@
             (or (nil? key) (nil? value))
               nil
             (= key "user-agent")
-              (process-user-agent result user-agent value)
+              (process-user-agent directives user-agent value)
             (= key "allow")
-              (process-allow result user-agent value)
+              (process-allow directives user-agent value)
             (= key "disallow")
-              (process-disallow result user-agent value)
+              (process-disallow directives user-agent value)
             :default
-              (process-directive result key value))))
+              (process-directive directives key value))))
       (dosync
-        (alter result assoc :modified-time (System/currentTimeMillis)))
-      @result)))
+        (alter directives assoc :modified-time (System/currentTimeMillis)))
+      @directives)))
 
 (defmulti parse-robots class)
 

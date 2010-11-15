@@ -34,7 +34,8 @@
                   "razzmatazz"
                     [[:disallow "/mif/tif/psd/"]
                      [:allow "/gif/png/img/"]]}
-        result (parse-lines lines)]
+        directives (parse-lines lines)
+        result (dissoc directives :modified-time)]
     (do
-      (is (contains? result :modified-time))
-      (is (= expected (dissoc result :modified-time))))))
+      (is (contains? directives :modified-time))
+      (is (= expected result)))))
