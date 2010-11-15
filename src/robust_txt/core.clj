@@ -54,7 +54,7 @@
 (defn parse-lines
   [lines]
   (let [user-agent (ref "*")
-        directives (ref {})]
+        directives (ref {"*" []})]
     (do
       (doseq [line lines]
         (let [[key value] (parse-line line)]
