@@ -8,8 +8,6 @@
     [java.io InputStream])
   (:gen-class))
 
-(def int-keys #{"crawl-delay" "request-rate"})
-
 (defn trim-comment
   [line]
   (su/replace line #"#.*$" ""))
