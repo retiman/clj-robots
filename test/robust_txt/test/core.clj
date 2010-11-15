@@ -54,4 +54,7 @@
     (let [ds {"google" [[:disallow "/foo/"]]
               "*" [[:disallow "/bar/"]]}]
       (is (not (crawlable-by-standard? ds "/foo/" :user-agent "google")))
-      (is (crawlable-by-standard? ds "/bar/" :user-agent "google")))))
+      (is (crawlable-by-standard? ds "/bar/" :user-agent "google"))
+      (is (not (crawlable-by-standard? ds "/bar/" :user-agent "*")))
+      (is (crawlable-by-standard? ds "/foo/" :user-agent "*"))
+      (is (not (crawlable? ds "/bar/" :user-agent "google"))))))
