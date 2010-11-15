@@ -77,7 +77,9 @@
 
 (defn crawlable-by-standard?
   [directives user-agent path]
-  (throw (new UnsupportedOperationException "Method not implemented")))
+  (let [permissions (filter #(= :disallow (first %))
+                            (get directives user-agent))]
+    (some #(. path startsWith (last %)) permissions)))
 
 (defn crawlable-by-google?
   [directives user-agent path]
