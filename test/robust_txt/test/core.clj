@@ -11,6 +11,9 @@
         string (stream-to-string stream)]
     (su/split-lines string)))
 
+(deftest test-trim-comment
+  (is (= "hello there " (trim-comment "hello there #this is a comment!"))))
+
 (deftest test-parse-line
   (do
     (is (= ["user-agent" ":*:"]
