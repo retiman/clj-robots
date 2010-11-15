@@ -3,6 +3,9 @@
     [robust-txt.utils :as util]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as su])
+  (:import
+    [clojure.lang ArraySeq]
+    [java.io InputStream])
   (:gen-class))
 
 (def int-keys #{"crawl-delay" "request-rate"})
@@ -71,3 +74,17 @@
       (dosync
         (alter result assoc :modified-time (System/currentTimeMillis)))
       @result)))
+
+(defmulti parse-robots class)
+
+(defmethod parse-robots
+  ArraySeq [lines]
+  (parse-lines lines))
+
+(defmethod parse-robots
+  String [string]
+  (parse-robots (su/split-lines string)))
+
+(defmethod parse-robots
+  InputStream [stream]
+  (parse-robots (util/stream-to-string stream)))
