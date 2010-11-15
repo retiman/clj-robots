@@ -6,12 +6,12 @@ Disallow: /tmp/
 Disallow: /private/
 
 User-agent: google
-Allow: /bif/baz/boo
-Disallow: /moo/goo/too
+Allow: /bif/baz/boo/
+Disallow: /moo/goo/too/
 
 User-agent: razzmatazz
-Disallow: /mif/tif/psd
-Allow: /gif/png/img
+Disallow: /mif/tif/psd/
+Allow: /gif/png/img/
 
 Crawl-delay: 10
 Request-rate: 5

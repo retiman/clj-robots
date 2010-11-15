@@ -29,10 +29,10 @@
                      [:disallow "/tmp/"]
                      [:disallow "/private/"]]
                   "google"
-                    [[:allow "/bif/baz/boo"]
-                     [:disallow "/moo/goo/too"]]
+                    [[:allow "/bif/baz/boo/"]
+                     [:disallow "/moo/goo/too/"]]
                   "razzmatazz"
-                    [[:disallow "/mif/tif/psd"]
-                     [:allow "/gif/png/img"]]}
+                    [[:disallow "/mif/tif/psd/"]
+                     [:allow "/gif/png/img/"]]}
         result (parse-lines lines)]
     (is (= expected (dissoc result "modified-time")))))
