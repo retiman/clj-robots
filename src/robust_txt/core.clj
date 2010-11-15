@@ -59,4 +59,6 @@
               (process-disallow result user-agent value)
             :default
               (process-directive result key value))))
+      (dosync
+        (alter result assoc "modified-time" (System/currentTimeMillis)))
       result)))
