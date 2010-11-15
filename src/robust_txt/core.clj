@@ -41,7 +41,7 @@
     (if (nil? processed-value)
       nil
       (dosync
-        (alter result assoc key processed-value)))))
+        (alter result assoc (keyword key) processed-value)))))
 
 (defn parse-line
   [line]
@@ -69,5 +69,5 @@
             :default
               (process-directive result key value))))
       (dosync
-        (alter result assoc "modified-time" (System/currentTimeMillis)))
+        (alter result assoc :modified-time (System/currentTimeMillis)))
       @result)))

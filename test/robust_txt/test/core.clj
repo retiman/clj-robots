@@ -20,8 +20,8 @@
 
 (deftest test-parse-lines
   (let [lines (get-lines "robust_txt/test/robots.txt")
-        expected {"request-rate" 5
-                  "crawl-delay" 10
+        expected {:request-rate 5
+                  :crawl-delay 10
                   "*"
                     [[:allow "/images/foo.jpg"]
                      [:disallow "/cgi-bin/"]
@@ -35,4 +35,6 @@
                     [[:disallow "/mif/tif/psd/"]
                      [:allow "/gif/png/img/"]]}
         result (parse-lines lines)]
-    (is (= expected (dissoc result "modified-time")))))
+    (do
+      (is (contains? result :modified-time))
+      (is (= expected (dissoc result :modified-time))))))
