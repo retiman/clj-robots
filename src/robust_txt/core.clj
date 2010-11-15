@@ -33,22 +33,15 @@
       (alter directives
              assoc @user-agent (vec (conj permissions [:disallow value]))))))
 
-(defn process-directive
-  [directives key value]
-  (let [processed-value (if (contains? #{"crawl-delay" "request-rate"} key)
-                          (try (Integer/parseInt value)
-                            (catch NumberFormatException e nil))
-                          value)]
-    (if (nil? processed-value)
-      nil
-      (dosync
-        (alter directives assoc (keyword key) processed-value)))))
-
 (defn parse-line
   [line]
   (let [[left right] (su/split (trim-comment line) #":" 2)
         key (su/lower-case (su/trim left))
-        value (if (nil? right) "" (su/trim right))]
+        trimmed-value (if (nil? right) "" (su/trim right))
+        value (if (contains? #{"crawl-delay" "request-rate"} key)
+                (try (Integer/parseInt trimmed-value)
+                  (catch NumberFormatException e ""))
+                trimmed-value)]
     (if (= "" value) nil [key value])))
 
 (defn parse-lines
@@ -68,7 +61,8 @@
             (= key "disallow")
               (process-disallow directives user-agent value)
             :default
-              (process-directive directives key value))))
+              (dosync
+                (alter directives assoc (keyword key) value)))))
       (dosync
         (alter directives assoc :modified-time (System/currentTimeMillis)))
       @directives)))
