@@ -36,9 +36,9 @@
 (defn parse-line
   [line]
   (let [[left right] (su/split (trim-comment line) #":" 2)
-        key (su/lower-case (su/trim left))
+        key (keyword (su/lower-case (su/trim left)))
         trimmed-value (if (nil? right) "" (su/trim right))
-        value (if (contains? #{"crawl-delay" "request-rate"} key)
+        value (if (contains? #{:crawl-delay :request-rate} key)
                 (try (Integer/parseInt trimmed-value)
                   (catch NumberFormatException e ""))
                 trimmed-value)]
@@ -54,15 +54,15 @@
           (cond
             (or (nil? key) (nil? value))
               nil
-            (= key "user-agent")
+            (= key :user-agent)
               (process-user-agent directives user-agent value)
-            (= key "allow")
+            (= key :allow)
               (process-allow directives user-agent value)
-            (= key "disallow")
+            (= key :disallow)
               (process-disallow directives user-agent value)
             :default
               (dosync
-                (alter directives assoc (keyword key) value)))))
+                (alter directives assoc key value)))))
       (dosync
         (alter directives assoc :modified-time (System/currentTimeMillis)))
       @directives)))
