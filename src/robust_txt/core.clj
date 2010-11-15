@@ -100,11 +100,14 @@
                                  :or {user-agent "*" strategy :standard}}]
   (cond
     (= strategy :google)
-      (crawlable-by-google? directives path :user-agent user-agent)
+      (and (crawlable-by-google? directives path :user-agent "*")
+           (crawlable-by-google? directives path :user-agent user-agent))
     (= strategy :bing)
-      (crawlable-by-bing? directives path :user-agent user-agent)
+      (and (crawlable-by-bing? directives path :user-agent "*")
+           (crawlable-by-bing? directives path :user-agent user-agent))
     :default
-      (crawlable-by-standard? directives path :user-agent user-agent)))
+      (and (crawlable-by-standard? directives path :user-agent "*"))
+           (crawlable-by-standard? directives path :user-agent user-agent)))
 
 (defmulti parse-robots class)
 
