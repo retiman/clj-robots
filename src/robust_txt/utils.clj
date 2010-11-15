@@ -5,7 +5,8 @@
     [clojure.contrib.str-utils2 :as s])
   (:import
     [java.io StringWriter]
-    [org.apache.commons.io IOUtils]))
+    [org.apache.commons.io IOUtils])
+  (:gen-class))
 
 (defn load-resource [fqn]
   (let [t (Thread/currentThread)
