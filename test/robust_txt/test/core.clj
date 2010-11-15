@@ -43,9 +43,15 @@
       (is (contains? ds :modified-time))
       (is (= expected result)))))
 
-(deftest test-parse-lines-no-content
-  (is (= {"*" []}
-         (dissoc (parse-lines [""]) :modified-time))))
+(deftest test-parse-robots
+  (do
+    (is {"*" []} (dissoc (parse-robots "") :modified-time))
+    (is {"*" []} (dissoc (parse-robots [""]) :modified-time))
+    (is {"*" []} (dissoc
+                   (parse-robots (load-resource "robust_txt/test/empty.txt"))
+                   :modified-time))
+    (is (contains? (parse-robots (load-resource "robust_txt/test/robots.txt"))
+                   "google"))))
 
 (deftest test-crawlable-by-standard?
   (do

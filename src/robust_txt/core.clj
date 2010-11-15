@@ -5,7 +5,7 @@
     [clojure.contrib.str-utils2 :as su]
     [clj-http.client :as client])
   (:import
-    [clojure.lang ArraySeq]
+    [clojure.lang Sequential]
     [java.io InputStream])
   (:gen-class))
 
@@ -112,7 +112,7 @@
 (defmulti parse-robots class)
 
 (defmethod parse-robots
-  ArraySeq [lines]
+  Sequential [lines]
   (parse-lines lines))
 
 (defmethod parse-robots
