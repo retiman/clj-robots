@@ -43,6 +43,11 @@
       (is (contains? ds :modified-time))
       (is (= expected result)))))
 
+(deftest test-parse-lines-bad
+  (let [lines (get-lines "robust_txt/test/robots-bad.txt")
+        ds (parse-lines lines)]
+    (println ds)))
+
 (deftest test-parse-robots
   (do
     (is {"*" []} (dissoc (parse-robots "") :modified-time))

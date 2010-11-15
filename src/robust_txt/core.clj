@@ -46,10 +46,10 @@
 
 (defn parse-line
   [line]
-  (let [[key value] (su/split (trim-comment line) #":" 2)]
-    (if (nil? value)
-      nil
-      [(su/lower-case (su/trim key)) (su/trim value)])))
+  (let [[left right] (su/split (trim-comment line) #":" 2)
+        key (su/lower-case (su/trim left))
+        value (if (nil? right) "" (su/trim right))]
+    (if (= "" value) nil [key value])))
 
 (defn parse-lines
   [lines]
