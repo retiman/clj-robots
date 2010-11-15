@@ -75,9 +75,11 @@
 
 (defn get-robots-txt
   [url]
-  (let [domain (. (io/as-url url) getHost)
-        response (client/get (str "http://" domain "/robots.txt"))]
-    (response :body)))
+  (try
+    (let [domain (. (io/as-url url) getHost)
+          response (client/get (str "http://" domain "/robots.txt"))]
+      (response :body))
+    (catch Exception e nil)))
 
 (defn crawlable-by-standard?
   [directives user-agent path]
