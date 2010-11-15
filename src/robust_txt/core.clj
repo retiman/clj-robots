@@ -98,7 +98,6 @@
 (defn crawlable?
   [directives user-agent path & {:keys [strategy] :or [strategy :standard]}]
   (cond
-    (nil? directives) true
     (= strategy :google) (crawlable-by-google? directives user-agent path)
     (= strategy :bing) (crawlable-by-bing? directives user-agent path)
     :default (crawlable-by-standard? directives user-agent path)))
