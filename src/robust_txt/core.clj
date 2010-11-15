@@ -49,8 +49,14 @@
       (doseq [line lines]
         (let [[key value] (parse-line line)]
           (cond
-            (= key "user-agent") (process-user-agent result user-agent value)
-            (= key "allow")      (process-allow result user-agent value)
-            (= key "disallow")   (process-disallow result user-agent value)
-            :default             (process-directive result key value))))
+            (or (nil? key) (nil? value))
+              nil
+            (= key "user-agent")
+              (process-user-agent result user-agent value)
+            (= key "allow")
+              (process-allow result user-agent value)
+            (= key "disallow")
+              (process-disallow result user-agent value)
+            :default
+              (process-directive result key value))))
       result)))
