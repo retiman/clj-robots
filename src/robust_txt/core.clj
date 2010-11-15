@@ -35,13 +35,13 @@
 
 (defn parse-line
   [line]
-  (let [[left right] (su/split (trim-comment line) #":" 2)
-        key (keyword (su/lower-case (su/trim left)))
+  (let [[left right]  (su/split (trim-comment line) #":" 2)
+        key (keyword  (su/lower-case (su/trim left)))
         trimmed-value (if (nil? right) "" (su/trim right))
-        value (if (contains? #{:crawl-delay :request-rate} key)
-                (try (Integer/parseInt trimmed-value)
-                  (catch NumberFormatException e ""))
-                trimmed-value)]
+        value         (if (contains? #{:crawl-delay :request-rate} key)
+                        (try (Integer/parseInt trimmed-value)
+                          (catch NumberFormatException e ""))
+                        trimmed-value)]
     (if (= "" value) nil [key value])))
 
 (defn parse-lines
