@@ -3,5 +3,5 @@ Disallow: # This is a malformed directive
 Crawl-delay: Not a number!
 # Here's another comment!
 
-Allow: /foobar # This is a real directive
+Allow: /foobar/ # This is a real directive
 Allow # Uh oh, this one is no good : /foobaz

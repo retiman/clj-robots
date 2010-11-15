@@ -45,8 +45,10 @@
 
 (deftest test-parse-lines-bad
   (let [lines (get-lines "robust_txt/test/robots-bad.txt")
-        ds (parse-lines lines)]
-    (println ds)))
+        ds (parse-lines lines)
+        expected {"*" [[:allow "/foobar/"]]}
+        result (dissoc ds :modified-time)]
+    (is (= expected result))))
 
 (deftest test-parse-robots
   (do
