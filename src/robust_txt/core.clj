@@ -106,8 +106,8 @@
       (and (crawlable-by-bing? directives path :user-agent "*")
            (crawlable-by-bing? directives path :user-agent user-agent))
     :default
-      (and (crawlable-by-standard? directives path :user-agent "*"))
-           (crawlable-by-standard? directives path :user-agent user-agent)))
+      (and (crawlable-by-standard? directives path :user-agent "*")
+           (crawlable-by-standard? directives path :user-agent user-agent))))
 
 (defmulti parse-robots class)
 

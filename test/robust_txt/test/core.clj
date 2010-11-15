@@ -34,10 +34,10 @@
                   "razzmatazz"
                     [[:disallow "/mif/tif/psd/"]
                      [:allow "/gif/png/img/"]]}
-        directives (parse-lines lines)
-        result (dissoc directives :modified-time)]
+        ds (parse-lines lines)
+        result (dissoc ds :modified-time)]
     (do
-      (is (contains? directives :modified-time))
+      (is (contains? ds :modified-time))
       (is (= expected result)))))
 
 (deftest test-parse-lines-no-content
@@ -46,8 +46,12 @@
 
 (deftest test-crawlable-by-standard?
   (do
-    (let [directives {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
-      (is (crawlable-by-standard? directives "/foo"))
-      (is (crawlable-by-standard? directives "/bif/"))
-      (is (not (crawlable-by-standard? directives "/bar/")))
-      (is (not (crawlable-by-standard? directives "/bar/2.html"))))))
+    (let [ds {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
+      (is (crawlable-by-standard? ds "/foo"))
+      (is (crawlable-by-standard? ds "/bif/"))
+      (is (not (crawlable-by-standard? ds "/bar/")))
+      (is (not (crawlable-by-standard? ds "/bar/2.html"))))
+    (let [ds {"google" [[:disallow "/foo/"]]
+              "*" [[:disallow "/bar/"]]}]
+      (is (not (crawlable-by-standard? ds "/foo/" :user-agent "google")))
+      (is (crawlable-by-standard? ds "/bar/" :user-agent "google")))))
