@@ -12,7 +12,6 @@
   [line]
   (su/replace line #"#.*$" ""))
 
-
 (defn process-user-agent
   [directives user-agent value]
   (dosync
@@ -77,7 +76,7 @@
   [directives user-agent path]
   (let [permissions (filter #(= :disallow (first %))
                             (get directives user-agent))]
-    (some #(. path startsWith (last %)) permissions)))
+    (nil? (some #(. path startsWith (last %)) permissions))))
 
 (defn crawlable-by-google?
   [directives user-agent path]
