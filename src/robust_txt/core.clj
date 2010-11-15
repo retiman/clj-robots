@@ -76,15 +76,15 @@
       @directives)))
 
 (defn crawlable-by-standard?
-  [directives path]
+  [directives user-agent path]
   (throw (new UnsupportedOperationException "Method not implemented")))
 
 (defn crawlable-by-google?
-  [directives path]
+  [directives user-agent path]
   (throw (new UnsupportedOperationException "Method not implemented")))
 
 (defn crawlable-by-bing?
-  [directives path]
+  [directives user-agent path]
   (throw (new UnsupportedOperationException "Method not implemented")))
 
 (defn crawlable?
