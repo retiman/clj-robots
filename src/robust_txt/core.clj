@@ -96,8 +96,8 @@
   (throw (new UnsupportedOperationException "Method not implemented")))
 
 (defn crawlable?
-  [directives user-agent path & {:keys [user-agent strategy]
-                                 :or {user-agent "*" strategy :standard}}]
+  [directives path & {:keys [user-agent strategy]
+                      :or {user-agent "*" strategy :standard}}]
   (cond
     (= strategy :google)
       (and (crawlable-by-google? directives path :user-agent "*")
