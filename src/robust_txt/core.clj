@@ -2,7 +2,8 @@
   (:require
     [robust-txt.utils :as util]
     [clojure.contrib.io :as io]
-    [clojure.contrib.str-utils2 :as su])
+    [clojure.contrib.str-utils2 :as su]
+    [clj-http.client :as client])
   (:import
     [clojure.lang ArraySeq]
     [java.io InputStream])
@@ -72,6 +73,12 @@
         (alter directives assoc :modified-time (System/currentTimeMillis)))
       @directives)))
 
+(defn get-robots-txt
+  [url]
+  (let [domain (. (io/as-url url) getHost)
+        response (client/get (str "http://" domain "/robots.txt"))]
+    (response :body)))
+
 (defn crawlable-by-standard?
   [directives user-agent path]
   (let [permissions (filter #(= :disallow (first %))
@@ -87,7 +94,7 @@
   (throw (new UnsupportedOperationException "Method not implemented")))
 
 (defn crawlable?
-  [directives path & {:keys [strategy] :or [strategy :standard]}]
+  [directives user-agent path & {:keys [strategy] :or [strategy :standard]}]
   (cond
     (= strategy :google) (crawlable-by-google? directives user-agent path)
     (= strategy :bing) (crawlable-by-bing? directives user-agent path)
