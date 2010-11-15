@@ -5,9 +5,12 @@
     [clojure.contrib.str-utils2 :as su])
   (:gen-class))
 
+(def int-keys #{"crawl-delay" "request-rate"})
+
 (defn trim-comment
   [line]
   (su/replace line #"#.*$" ""))
+
 
 (defn process-user-agent
   [result user-agent value]
@@ -29,10 +32,20 @@
       (alter result
              assoc @user-agent (vec (conj permissions [:disallow value]))))))
 
+(defn process-value
+  [value]
+  (if (contains? #{"crawl-delay" "request-rate"} value)
+    (try (Integer/parseInt value)
+      (catch NumberFormatException e nil))
+    value))
+
 (defn process-directive
   [result key value]
-  (dosync
-    (alter result assoc key value)))
+  (let [processed-value (process-value value)]
+    (if (nil? processed-value)
+      nil
+      (dosync
+        (alter result assoc key processed-value)))))
 
 (defn parse-line
   [line]
