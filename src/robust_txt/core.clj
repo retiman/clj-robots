@@ -75,6 +75,25 @@
         (alter directives assoc :modified-time (System/currentTimeMillis)))
       @directives)))
 
+(defn crawlable-by-standard?
+  [directives path]
+  (throw (new UnsupportedOperationException "Method not implemented")))
+
+(defn crawlable-by-google?
+  [directives path]
+  (throw (new UnsupportedOperationException "Method not implemented")))
+
+(defn crawlable-by-bing?
+  [directives path]
+  (throw (new UnsupportedOperationException "Method not implemented")))
+
+(defn crawlable?
+  [directives path & {:keys [strategy] :or [strategy :standard]}]
+  (cond
+    (= strategy :google) (crawlable-by-google? directives path)
+    (= strategy :bing) (crawlable-by-bing? directives path)
+    :default (crawlable-by-standard? directives path)))
+
 (defmulti parse-robots class)
 
 (defmethod parse-robots
