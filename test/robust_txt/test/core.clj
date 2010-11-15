@@ -43,3 +43,11 @@
 (deftest test-parse-lines-no-content
   (is (= {"*" []}
          (dissoc (parse-lines [""]) :modified-time))))
+
+(deftest test-crawlable-by-standard?
+  (do
+    (let [directives {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
+      (is (crawlable-by-standard? directives "/foo"))
+      (is (crawlable-by-standard? directives "/bif/"))
+      (is (not (crawlable-by-standard? directives "/bar/")))
+      (is (not (crawlable-by-standard? directives "/bar/2.html"))))))

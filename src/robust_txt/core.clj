@@ -82,26 +82,29 @@
     (catch Exception e "")))
 
 (defn crawlable-by-standard?
-  [directives path & {:keys [user-agent] :or [user-agent "*"]}]
+  [directives path & {:keys [user-agent] :or {user-agent "*"}}]
   (let [permissions (filter #(= :disallow (first %))
                             (get directives user-agent))]
     (nil? (some #(. path startsWith (last %)) permissions))))
 
 (defn crawlable-by-google?
-  [directives path & {:keys [user-agent] :or [user-agent "*"]}]
+  [directives path & {:keys [user-agent] :or {user-agent "*"}}]
   (throw (new UnsupportedOperationException "Method not implemented")))
 
 (defn crawlable-by-bing?
-  [directives path & {:keys [user-agent] :or [user-agent "*"]}]
+  [directives path & {:keys [user-agent] :or {user-agent "*"}}]
   (throw (new UnsupportedOperationException "Method not implemented")))
 
 (defn crawlable?
   [directives user-agent path & {:keys [user-agent strategy]
-                                 :or [user-agent "*" strategy :standard]}]
+                                 :or {user-agent "*" strategy :standard}}]
   (cond
-    (= strategy :google) (crawlable-by-google? directives user-agent path)
-    (= strategy :bing) (crawlable-by-bing? directives user-agent path)
-    :default (crawlable-by-standard? directives user-agent path)))
+    (= strategy :google)
+      (crawlable-by-google? directives path :user-agent user-agent)
+    (= strategy :bing)
+      (crawlable-by-bing? directives path :user-agent user-agent)
+    :default
+      (crawlable-by-standard? directives path :user-agent user-agent)))
 
 (defmulti parse-robots class)
 
