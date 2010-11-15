@@ -32,16 +32,12 @@
       (alter result
              assoc @user-agent (vec (conj permissions [:disallow value]))))))
 
-(defn process-value
-  [value]
-  (if (contains? #{"crawl-delay" "request-rate"} value)
-    (try (Integer/parseInt value)
-      (catch NumberFormatException e nil))
-    value))
-
 (defn process-directive
   [result key value]
-  (let [processed-value (process-value value)]
+  (let [processed-value (if (contains? #{"crawl-delay" "request-rate"} key)
+                          (try (Integer/parseInt value)
+                            (catch NumberFormatException e nil))
+                          value)]
     (if (nil? processed-value)
       nil
       (dosync
@@ -74,4 +70,4 @@
               (process-directive result key value))))
       (dosync
         (alter result assoc "modified-time" (System/currentTimeMillis)))
-      result)))
+      @result)))

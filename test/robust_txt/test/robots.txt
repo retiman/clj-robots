@@ -3,9 +3,17 @@ Allow: /images/foo.jpg # This is a comment!
 Disallow: /cgi-bin/
 Disallow: /images/ # This is another comment!
 Disallow: /tmp/
-
 Disallow: /private/
+
+User-agent: google
+Allow: /bif/baz/boo
+Disallow: /moo/goo/too
+
+User-agent: razzmatazz
+Disallow: /mif/tif/psd
+Allow: /gif/png/img
+
 Crawl-delay: 10
-Request-rate: 10
+Request-rate: 5
 # Here's another comment!
 
