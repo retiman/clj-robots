@@ -1,4 +1,4 @@
-(defproject robust-txt "0.2.0a"
+(defproject robust-txt "0.2.1"
   :description "A robots.txt parser."
   :jar-dir "build"
   :compile-path "build/classes"
