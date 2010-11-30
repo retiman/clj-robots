@@ -6,7 +6,8 @@
     [clj-http.client :as client])
   (:import
     [clojure.lang Sequential]
-    [java.io InputStream])
+    [java.io InputStream]
+    [java.net URL])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
@@ -72,7 +73,7 @@
 (defn get-robots
   [url]
   (try
-    (let [domain (. (io/as-url url) getHost)
+    (let [domain (.getHost ^URL (io/as-url url))
           response (client/get (str "http://" domain "/robots.txt"))]
       (response :body))
     (catch Exception e "")))
