@@ -82,7 +82,7 @@
   [directives path & {:keys [user-agent] :or {user-agent "*"}}]
   (let [permissions (filter #(= :disallow (first %))
                             (get directives user-agent))]
-    (nil? (some #(. path startsWith (last %)) permissions))))
+    (nil? (some #(.startsWith ^String path (last %)) permissions))))
 
 (defn crawlable-by-google?
   [directives path & {:keys [user-agent] :or {user-agent "*"}}]
