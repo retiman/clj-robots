@@ -3,8 +3,7 @@
   :jar-dir "build"
   :compile-path "build/classes"
   :repositories
-    {"clojars" "http://clojars.org/repo"
-     "lousycoder" "http://maven.lousycoder.com"}
+    {"clojars" "http://clojars.org/repo"}
   :dependencies
     [[org.clojure/clojure "1.2.0"]
      [org.clojure/clojure-contrib "1.2.0"]
