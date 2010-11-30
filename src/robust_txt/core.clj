@@ -9,6 +9,8 @@
     [java.io InputStream])
   (:gen-class))
 
+(set! *warn-on-reflection* true)
+
 (defn trim-comment
   [line]
   (su/replace line #"#.*$" ""))

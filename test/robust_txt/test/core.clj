@@ -6,6 +6,8 @@
   (:require
     [clojure.contrib.str-utils2 :as su]))
 
+(set! *warn-on-reflection* true)
+
 (defn get-lines [resource]
   (let [stream (load-resource resource)
         string (stream-to-string stream)]
