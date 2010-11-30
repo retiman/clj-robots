@@ -10,7 +10,7 @@
     [java.net URL])
   (:gen-class))
 
-(set! *warn-on-reflection* true)
+;(set! *warn-on-reflection* true)
 
 (defn trim-comment
   [line]
