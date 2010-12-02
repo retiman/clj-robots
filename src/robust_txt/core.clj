@@ -51,24 +51,23 @@
   [lines]
   (let [user-agent (ref "*")
         directives (ref {"*" []})]
-    (do
-      (doseq [line lines]
-        (let [[key value] (parse-line line)]
-          (cond
-            (or (nil? key) (nil? value))
-              nil
-            (= key :user-agent)
-              (process-user-agent directives user-agent value)
-            (= key :allow)
-              (process-allow directives user-agent value)
-            (= key :disallow)
-              (process-disallow directives user-agent value)
-            :default
-              (dosync
-                (alter directives assoc key value)))))
-      (dosync
-        (alter directives assoc :modified-time (System/currentTimeMillis)))
-      @directives)))
+    (doseq [line lines]
+      (let [[key value] (parse-line line)]
+        (cond
+          (or (nil? key) (nil? value))
+            nil
+          (= key :user-agent)
+            (process-user-agent directives user-agent value)
+          (= key :allow)
+            (process-allow directives user-agent value)
+          (= key :disallow)
+            (process-disallow directives user-agent value)
+          :default
+            (dosync
+              (alter directives assoc key value)))))
+    (dosync
+      (alter directives assoc :modified-time (System/currentTimeMillis)))
+    @directives))
 
 (defn get-robots
   [url]
