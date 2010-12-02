@@ -1,4 +1,4 @@
-(ns robust-txt.bing
+(ns robust-txt.strategy.bing
   (:gen-class))
 
 (defn crawlable?

@@ -1,4 +1,4 @@
-(ns robust-txt.google
+(ns robust-txt.strategy.google
   (:gen-class))
 
 (defn crawlable?
