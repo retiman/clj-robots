@@ -79,9 +79,11 @@
 
 (defn crawlable?
   [directives ^String path & {:keys [user-agent] :or {user-agent "*"}}]
-  (let [permissions (filter #(= :disallow (first %))
-                            (get directives user-agent))]
-    (nil? (some #(.startsWith path (last %)) permissions))))
+  (let [permissions (filter #(= :disallow (first %)) (get directives user-agent))]
+    (and (nil? (some #(.startsWith path (last %)) permissions))
+         (if (not= "*" user-agent)
+           (crawlable? directives path :user-agent "*")
+           true))))
 
 (defmulti parse-robots class)
 
