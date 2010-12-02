@@ -62,10 +62,15 @@
                    "google"))))
 
 (deftest test-crawlable?
-  (let [ds {"google" [[:disallow "/foo/"]]
-            "*" [[:disallow "/bar/"]]}]
-    (is (not (crawlable? ds "/foo/" :user-agent "google")))
-    (is (not (crawlable? ds "/bar/" :user-agent "google")))
-    (is (not (crawlable? ds "/bar/" :user-agent "*")))
-    (is (crawlable? ds "/foo/" :user-agent "*"))
-    (is (not (crawlable? ds "/bar/" :user-agent "google")))))
+  (do
+    (let [ds {"google" [[:disallow "/foo/"]]
+              "*" [[:disallow "/bar/"]]}]
+      (is (not (crawlable? ds "/foo/" :user-agent "google")))
+      (is (not (crawlable? ds "/bar/" :user-agent "google")))
+      (is (not (crawlable? ds "/bar/" :user-agent "*")))
+      (is (crawlable? ds "/foo/" :user-agent "*")))
+    (let [ds {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
+      (is (crawlable? ds "/foo"))
+      (is (crawlable? ds "/bif/"))
+      (is (not (crawlable? ds "/bar/")))
+      (is (not (crawlable? ds "/bar/2.html"))))))

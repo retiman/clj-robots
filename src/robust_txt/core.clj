@@ -3,7 +3,6 @@
     [robust-txt.utils :as util]
     [robust-txt.google :as google]
     [robust-txt.bing :as bing]
-    [robust-txt.standard :as standard]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as su]
     [clj-http.client :as client])
@@ -81,18 +80,10 @@
     (catch Exception e "")))
 
 (defn crawlable?
-  [directives path & {:keys [user-agent strategy]
-                      :or {user-agent "*" strategy :standard}}]
-  (cond
-    (= strategy :google)
-      (and (google/crawlable? directives path :user-agent "*")
-           (google/crawlable? directives path :user-agent user-agent))
-    (= strategy :bing)
-      (and (bing/crawlable? directives path :user-agent "*")
-           (bing/crawlable? directives path :user-agent user-agent))
-    :default
-      (and (standard/crawlable? directives path :user-agent "*")
-           (standard/crawlable? directives path :user-agent user-agent))))
+  [directives ^String path & {:keys [user-agent] :or {user-agent "*"}}]
+  (let [permissions (filter #(= :disallow (first %))
+                            (get directives user-agent))]
+    (nil? (some #(.startsWith path (last %)) permissions))))
 
 (defmulti parse-robots class)
 
