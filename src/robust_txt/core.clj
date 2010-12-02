@@ -2,6 +2,7 @@
   (:require
     [robust-txt.utils :as util]
     [robust-txt.google :as google]
+    [robust-txt.bing :as bing]
     [robust-txt.standard :as standard]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as su]
@@ -79,10 +80,6 @@
       (response :body))
     (catch Exception e "")))
 
-(defn crawlable-by-bing?
-  [directives path & {:keys [user-agent] :or {user-agent "*"}}]
-  (throw (new UnsupportedOperationException "Method not implemented")))
-
 (defn crawlable?
   [directives path & {:keys [user-agent strategy]
                       :or {user-agent "*" strategy :standard}}]
@@ -91,8 +88,8 @@
       (and (google/crawlable? directives path :user-agent "*")
            (google/crawlable? directives path :user-agent user-agent))
     (= strategy :bing)
-      (and (crawlable-by-bing? directives path :user-agent "*")
-           (crawlable-by-bing? directives path :user-agent user-agent))
+      (and (bing/crawlable? directives path :user-agent "*")
+           (bing/crawlable? directives path :user-agent user-agent))
     :default
       (and (standard/crawlable? directives path :user-agent "*")
            (standard/crawlable? directives path :user-agent user-agent))))
