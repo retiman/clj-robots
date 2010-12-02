@@ -14,31 +14,31 @@
 
 ;(set! *warn-on-reflection* true)
 
-(defn trim-comment
+(defn- trim-comment
   [line]
   (su/replace line #"#.*$" ""))
 
-(defn process-user-agent
+(defn- process-user-agent
   [directives user-agent value]
   (dosync
     (ref-set user-agent value)
     (alter directives assoc @user-agent [])))
 
-(defn process-allow
+(defn- process-allow
   [directives user-agent value]
   (dosync
     (let [permissions (@directives @user-agent)]
       (alter directives
              assoc @user-agent (vec (conj permissions [:allow value]))))))
 
-(defn process-disallow
+(defn- process-disallow
   [directives user-agent value]
   (dosync
     (let [permissions (@directives @user-agent)]
       (alter directives
              assoc @user-agent (vec (conj permissions [:disallow value]))))))
 
-(defn parse-line
+(defn- parse-line
   [line]
   (let [[left right]  (su/split (trim-comment line) #":" 2)
         key           (keyword (su/lower-case (su/trim left)))
@@ -49,7 +49,7 @@
                         trimmed-value)]
     (if (= "" value) nil [key value])))
 
-(defn parse-lines
+(defn- parse-lines
   [lines]
   (let [user-agent (ref "*")
         directives (ref {"*" []})]

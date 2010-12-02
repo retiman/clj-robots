@@ -1,12 +1,16 @@
 (ns robust-txt.test.core
   (:use
     [robust-txt.core]
-    [robust-txt.utils :only (load-resource stream-to-string)]
+    [robust-txt.utils]
+    [robust-txt.test.utils]
     [clojure.test])
   (:require
-    [clojure.contrib.str-utils2 :as su]))
+    [clojure.contrib.str-utils2 :as su])
+  (:gen-class))
 
 (set! *warn-on-reflection* true)
+
+(refer-private 'robust-txt.core)
 
 (defn get-lines [resource]
   (let [stream (load-resource resource)
