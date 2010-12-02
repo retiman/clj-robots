@@ -1,8 +1,8 @@
 (ns robust-txt.test.core
   (:use
     [robust-txt.core]
-    [robust-txt.utils]
-    [robust-txt.test.utils]
+    [robust-txt.utils :only (load-resource stream-to-string)]
+    [robust-txt.test.utils :only (refer-private)]
     [clojure.test])
   (:require
     [clojure.contrib.str-utils2 :as su])
