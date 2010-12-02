@@ -2,6 +2,7 @@
   (:require
     [robust-txt.utils :as util]
     [robust-txt.google :as google]
+    [robust-txt.standard :as standard]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as su]
     [clj-http.client :as client])
@@ -78,12 +79,6 @@
       (response :body))
     (catch Exception e "")))
 
-(defn crawlable-by-standard?
-  [directives path & {:keys [user-agent] :or {user-agent "*"}}]
-  (let [permissions (filter #(= :disallow (first %))
-                            (get directives user-agent))]
-    (nil? (some #(.startsWith ^String path (last %)) permissions))))
-
 (defn crawlable-by-bing?
   [directives path & {:keys [user-agent] :or {user-agent "*"}}]
   (throw (new UnsupportedOperationException "Method not implemented")))
@@ -99,8 +94,8 @@
       (and (crawlable-by-bing? directives path :user-agent "*")
            (crawlable-by-bing? directives path :user-agent user-agent))
     :default
-      (and (crawlable-by-standard? directives path :user-agent "*")
-           (crawlable-by-standard? directives path :user-agent user-agent))))
+      (and (standard/crawlable? directives path :user-agent "*")
+           (standard/crawlable? directives path :user-agent user-agent))))
 
 (defmulti parse-robots class)
 

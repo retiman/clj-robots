@@ -62,17 +62,11 @@
     (is (contains? (parse-robots (load-resource "robust_txt/test/robots.txt"))
                    "google"))))
 
-(deftest test-crawlable-by-standard?
-  (do
-    (let [ds {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
-      (is (crawlable-by-standard? ds "/foo"))
-      (is (crawlable-by-standard? ds "/bif/"))
-      (is (not (crawlable-by-standard? ds "/bar/")))
-      (is (not (crawlable-by-standard? ds "/bar/2.html"))))
-    (let [ds {"google" [[:disallow "/foo/"]]
-              "*" [[:disallow "/bar/"]]}]
-      (is (not (crawlable-by-standard? ds "/foo/" :user-agent "google")))
-      (is (crawlable-by-standard? ds "/bar/" :user-agent "google"))
-      (is (not (crawlable-by-standard? ds "/bar/" :user-agent "*")))
-      (is (crawlable-by-standard? ds "/foo/" :user-agent "*"))
-      (is (not (crawlable? ds "/bar/" :user-agent "google"))))))
+(deftest test-crawlable?
+  (let [ds {"google" [[:disallow "/foo/"]]
+            "*" [[:disallow "/bar/"]]}]
+    (is (not (crawlable? ds "/foo/" :user-agent "google")))
+    (is (not (crawlable? ds "/bar/" :user-agent "google")))
+    (is (not (crawlable? ds "/bar/" :user-agent "*")))
+    (is (crawlable? ds "/foo/" :user-agent "*"))
+    (is (not (crawlable? ds "/bar/" :user-agent "google")))))
