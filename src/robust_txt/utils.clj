@@ -8,12 +8,16 @@
     [org.apache.commons.io IOUtils])
   (:gen-class))
 
-(defn load-resource [fqn]
+(defn load-resource
+  "Return a resource located on path."
+  [path]
   (let [t (Thread/currentThread)
         loader (.getContextClassLoader t)]
-    (. loader getResourceAsStream fqn)))
+    (. loader getResourceAsStream path)))
 
-(defn stream-to-string [stream]
+(defn stream-to-string
+  "Convert an InputStream to a String."
+  [stream]
   (let [writer (new StringWriter)]
     (do
       (IOUtils/copy stream writer)
