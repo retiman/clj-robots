@@ -41,9 +41,8 @@
                      [:allow "/gif/png/img/"]]}
         ds (parse-lines lines)
         result (dissoc ds :modified-time)]
-    (do
-      (is (contains? ds :modified-time))
-      (is (= expected result)))))
+    (is (contains? ds :modified-time))
+    (is (= expected result))))
 
 (deftest test-parse-lines-bad
   (let [lines (get-lines "robust_txt/test/robots-bad.txt")
