@@ -56,15 +56,10 @@
         (cond
           (or (nil? key) (nil? value))
             nil
-          (= key :user-agent)
-            (process-user-agent directives user-agent value)
-          (= key :allow)
-            (process-allow directives user-agent value)
-          (= key :disallow)
-            (process-disallow directives user-agent value)
-          :default
-            (dosync
-              (alter directives assoc key value)))))
+          (= key :user-agent) (process-user-agent directives user-agent value)
+          (= key :allow)      (process-allow directives user-agent value)
+          (= key :disallow)   (process-disallow directives user-agent value)
+          :default            (dosync (alter directives assoc key value)))))
     (dosync
       (alter directives assoc :modified-time (System/currentTimeMillis)))
     @directives))
