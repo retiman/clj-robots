@@ -29,21 +29,13 @@
     (ref-set user-agent value)
     (alter directives assoc @user-agent [])))
 
-(defn- process-allow
-  "Set an allow directive for the current user-agent."
-  [directives user-agent value]
+(defn- process-directive
+  "Set an allow or disallow directive for the current user-agent."
+  [directives user-agent key value]
   (dosync
     (let [permissions (@directives @user-agent)]
       (alter directives
-             assoc @user-agent (vec (conj permissions [:allow value]))))))
-
-(defn- process-disallow
-  "Set a disallow directive for the current user-agent."
-  [directives user-agent value]
-  (dosync
-    (let [permissions (@directives @user-agent)]
-      (alter directives
-             assoc @user-agent (vec (conj permissions [:disallow value]))))))
+             assoc @user-agent (vec (conj permissions [key value]))))))
 
 (defn- parse-key
   "Parse the key in a directive."
@@ -75,10 +67,14 @@
         (cond
           (or (nil? key) (nil? value))
             nil
-          (= key :user-agent) (process-user-agent directives user-agent value)
-          (= key :allow)      (process-allow directives user-agent value)
-          (= key :disallow)   (process-disallow directives user-agent value)
-          :default            (dosync (alter directives assoc key value)))))
+          (= key :user-agent)
+            (process-user-agent directives user-agent value)
+          (= key :allow)
+            (process-directive directives user-agent :allow value)
+          (= key :disallow)
+            (process-directive directives user-agent :disallow value)
+          :default
+            (dosync (alter directives assoc key value)))))
     (dosync
       (alter directives assoc :modified-time (System/currentTimeMillis)))
     @directives))
