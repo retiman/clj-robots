@@ -97,7 +97,8 @@
   Note that allow directives are completely ignored and only the first
   disallow directive is consulted to determine if a path can be crawled."
   [directives ^String path & {:keys [user-agent] :or {user-agent "*"}}]
-  (let [permissions (filter #(= :disallow (first %)) (get directives user-agent))]
+  (let [select-disallows #(= :disallow (first %))
+        permissions (filter select-disallows (get directives user-agent))]
     (and (nil? (some #(.startsWith path (last %)) permissions))
          (if (not= "*" user-agent)
            (crawlable? directives path :user-agent "*")
