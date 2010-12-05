@@ -104,7 +104,9 @@
            (crawlable? directives path :user-agent "*")
            true))))
 
-(defmulti parse-robots class)
+(defmulti parse-robots
+  "Parse robots.txt; returns a data structure to pass to crawlable?"
+  class)
 
 (defmethod parse-robots
   Sequential [lines]
