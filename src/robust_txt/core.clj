@@ -1,6 +1,6 @@
 (ns robust-txt.core
   (:require
-    [robust-txt.utils :as util]
+    [robust-txt.utils :as utils]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as su]
     [clj-http.client :as client])
@@ -44,7 +44,7 @@
   [key value]
   (let [t (if (nil? value) "" (su/trim value))]
     (if (contains? #{:crawl-delay :request-rate} key)
-      (util/parse-int t)
+      (utils/parse-int t)
       t)))
 
 (defn- parse-line
@@ -99,4 +99,4 @@
 
 (defmethod parse-robots
   InputStream [stream]
-  (parse-robots (util/stream-to-string stream)))
+  (parse-robots (utils/stream-to-string stream)))
