@@ -22,3 +22,8 @@
     (do
       (IOUtils/copy stream writer)
       (. writer toString))))
+
+(defn parse-int
+  "Convert a String to an integer or return 0."
+  [s]
+  (try (Integer/parseInt s) (catch NumberFormatException e nil)))

@@ -42,10 +42,9 @@
 
 (defn- parse-value
   [key value]
-  (let [t (if (nil? right) "" (su/trim value))]
+  (let [t (if (nil? value) "" (su/trim value))]
     (if (contains? #{:crawl-delay :request-rate} key)
-      (try (Integer/parseInt t)
-        (catch NumberFormatException e ""))
+      (util/parse-int t)
       t)))
 
 (defn- parse-line
