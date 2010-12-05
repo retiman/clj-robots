@@ -85,7 +85,7 @@
   (try
     (let [protocol (.getProtocol url)
           domain (.getHost url)
-          response (client/get (str protocol domain "/robots.txt"))]
+          response (client/get (str protocol "://" domain "/robots.txt"))]
       (response :body))
     (catch Exception e "")))
 
