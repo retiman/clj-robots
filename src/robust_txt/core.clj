@@ -40,15 +40,19 @@
   [key]
   (keyword (su/lower-case (su/trim key))))
 
+(defn- parse-value
+  [key value]
+  (let [t (if (nil? right) "" (su/trim value))]
+    (if (contains? #{:crawl-delay :request-rate} key)
+      (try (Integer/parseInt t)
+        (catch NumberFormatException e ""))
+      t)))
+
 (defn- parse-line
   [line]
   (let [[left right]  (su/split (trim-comment line) #":" 2)
         key           (parse-key left)
-        trimmed-value (if (nil? right) "" (su/trim right))
-        value         (if (contains? #{:crawl-delay :request-rate} key)
-                        (try (Integer/parseInt trimmed-value)
-                          (catch NumberFormatException e ""))
-                        trimmed-value)]
+        value         (parse-value key right)]
     (if (= "" value) nil [key value])))
 
 (defn- parse-lines
