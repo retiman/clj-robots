@@ -17,6 +17,11 @@
   [line]
   (su/replace line #"#.*$" ""))
 
+(defn- int-key?
+  "Returns true if this directive's value should be parsed as an Integer."
+  [key]
+  (contains? #{:crawl-delay :request-rate} key))
+
 (defn- process-user-agent
   "Set the current user-agent and add it to the list of user-agents."
   [directives user-agent value]
@@ -48,10 +53,9 @@
 (defn- parse-value
   "Parse the value in a directive."
   [key value]
-  (let [t (if (nil? value) "" (su/trim value))]
-    (if (contains? #{:crawl-delay :request-rate} key)
-      (utils/parse-int t)
-      t)))
+  (cond (nil? value)   ""
+        (int-key? key) ((comp utils/parse-int su/trim) value)
+        :default       (su/trim value)))
 
 (defn- parse-line
   "Parse a line from a robots.txt file."
