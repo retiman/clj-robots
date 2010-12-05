@@ -79,12 +79,18 @@
       (alter directives assoc :modified-time (System/currentTimeMillis)))
     @directives))
 
-(defn get-robots
+(defmulti get-robots
   "Download robots.txt for a particular URL."
-  [url]
+  class)
+
+(defmethod get-robots
+  URL [url]
+  (get-robots (.getHost url)))
+
+(defmethod get-robots
+  String [domain]
   (try
-    (let [domain (.getHost ^URL (io/as-url url))
-          response (client/get (str "http://" domain "/robots.txt"))]
+    (let [response (client/get (str "http://" domain "/robots.txt"))]
       (response :body))
     (catch Exception e "")))
 
