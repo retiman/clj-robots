@@ -36,10 +36,14 @@
       (alter directives
              assoc @user-agent (vec (conj permissions [:disallow value]))))))
 
+(defn- parse-key
+  [key]
+  (keyword (su/lower-case (su/trim key))))
+
 (defn- parse-line
   [line]
   (let [[left right]  (su/split (trim-comment line) #":" 2)
-        key           (keyword (su/lower-case (su/trim left)))
+        key           (parse-key left)
         trimmed-value (if (nil? right) "" (su/trim right))
         value         (if (contains? #{:crawl-delay :request-rate} key)
                         (try (Integer/parseInt trimmed-value)
