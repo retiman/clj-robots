@@ -13,7 +13,7 @@
   [path]
   (let [t (Thread/currentThread)
         loader (.getContextClassLoader t)]
-    (. loader getResourceAsStream path)))
+    (.getResourceAsStream loader path)))
 
 (defn stream-to-string
   "Convert an InputStream to a String."
@@ -21,7 +21,7 @@
   (let [writer (new StringWriter)]
     (do
       (IOUtils/copy stream writer)
-      (. writer toString))))
+      (.toString writer))))
 
 (defn get-lines
   "Load a resource, convert it to a string, and return a vector of lines."
