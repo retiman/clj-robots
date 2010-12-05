@@ -13,16 +13,19 @@
 ;(set! *warn-on-reflection* true)
 
 (defn- trim-comment
+  "Removes everything after the first # character in a String."
   [line]
   (su/replace line #"#.*$" ""))
 
 (defn- process-user-agent
+  "Set the current user-agent and add it to the list of user-agents."
   [directives user-agent value]
   (dosync
     (ref-set user-agent value)
     (alter directives assoc @user-agent [])))
 
 (defn- process-allow
+  "Set an allow directive for the current user-agent."
   [directives user-agent value]
   (dosync
     (let [permissions (@directives @user-agent)]
@@ -30,6 +33,7 @@
              assoc @user-agent (vec (conj permissions [:allow value]))))))
 
 (defn- process-disallow
+  "Set a disallow directive for the current user-agent."
   [directives user-agent value]
   (dosync
     (let [permissions (@directives @user-agent)]
@@ -37,10 +41,12 @@
              assoc @user-agent (vec (conj permissions [:disallow value]))))))
 
 (defn- parse-key
+  "Parse the key in a directive."
   [key]
   (keyword (su/lower-case (su/trim key))))
 
 (defn- parse-value
+  "Parse the value in a directive."
   [key value]
   (let [t (if (nil? value) "" (su/trim value))]
     (if (contains? #{:crawl-delay :request-rate} key)
@@ -48,6 +54,7 @@
       t)))
 
 (defn- parse-line
+  "Parse a line from a robots.txt file."
   [line]
   (let [[left right]  (su/split (trim-comment line) #":" 2)
         key           (parse-key left)
@@ -55,6 +62,7 @@
     (if (= "" value) nil [key value])))
 
 (defn- parse-lines
+  "Parse the lines of the robots.txt file."
   [lines]
   (let [user-agent (ref "*")
         directives (ref {"*" []})]
@@ -72,6 +80,7 @@
     @directives))
 
 (defn get-robots
+  "Download robots.txt for a particular URL."
   [url]
   (try
     (let [domain (.getHost ^URL (io/as-url url))
@@ -80,6 +89,13 @@
     (catch Exception e "")))
 
 (defn crawlable?
+  "Returns true if a list of directives allows the path to be crawled using
+  this interpretation of robots.txt:
+
+  http://www.robotstxt.org/
+
+  Note that allow directives are completely ignored and only the first
+  disallow directive is consulted to determine if a path can be crawled."
   [directives ^String path & {:keys [user-agent] :or {user-agent "*"}}]
   (let [permissions (filter #(= :disallow (first %)) (get directives user-agent))]
     (and (nil? (some #(.startsWith path (last %)) permissions))
