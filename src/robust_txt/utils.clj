@@ -2,7 +2,7 @@
   (:require
     [clojure.contrib.duck-streams :as ds]
     [clojure.contrib.io :as io]
-    [clojure.contrib.str-utils2 :as s])
+    [clojure.contrib.str-utils2 :as su])
   (:import
     [java.io StringWriter]
     [org.apache.commons.io IOUtils])
@@ -22,6 +22,11 @@
     (do
       (IOUtils/copy stream writer)
       (. writer toString))))
+
+(defn get-lines
+  "Load a resource, convert it to a string, and return a vector of lines."
+  [resource]
+  ((comp su/split-lines stream-to-string load-resource) resource))
 
 (defn parse-int
   "Convert a String to an integer or return 0."

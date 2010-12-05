@@ -1,7 +1,7 @@
 (ns robust-txt.test.core
   (:use
     [robust-txt.core]
-    [robust-txt.utils :only (load-resource stream-to-string)]
+    [robust-txt.utils :only (load-resource get-lines)]
     [robust-txt.test.utils :only (refer-private)]
     [clojure.test])
   (:require
@@ -11,11 +11,6 @@
 (set! *warn-on-reflection* true)
 
 (refer-private 'robust-txt.core)
-
-(defn get-lines [resource]
-  (let [stream (load-resource resource)
-        string (stream-to-string stream)]
-    (su/split-lines string)))
 
 (deftest test-trim-comment
   (is (= "hello there " (trim-comment "hello there #this is a comment!"))))
