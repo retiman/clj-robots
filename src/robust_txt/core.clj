@@ -69,10 +69,8 @@
             nil
           (= key :user-agent)
             (process-user-agent directives user-agent value)
-          (= key :allow)
-            (process-directive directives user-agent :allow value)
-          (= key :disallow)
-            (process-directive directives user-agent :disallow value)
+          (contains? #{:allow :disallow} key)
+            (process-directive directives user-agent key value)
           :default
             (dosync (alter directives assoc key value)))))
     (dosync
