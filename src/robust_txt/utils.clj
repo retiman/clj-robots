@@ -36,9 +36,9 @@
 (defn parse-ratio
   "Convert a String to a Ratio."
   [s]
-  (let [[a b] (su/split s #"/" 2)
-        p     (parse-int a)
-        q     (parse-int b)]
+  (let [t (map parse-int (su/split s #"/" 2))
+        p (first t)
+        q (second t)]
     (cond (nil? p) nil
           (nil? q) nil
           :default (/ p q))))
