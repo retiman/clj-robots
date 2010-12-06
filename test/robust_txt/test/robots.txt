@@ -17,3 +17,7 @@ Crawl-delay: 10
 Request-rate: 5
 # Here's another comment!
 
+Sitemap: http://www.lousycoder.com/sitemap1.xml
+
+Sitemap: http://www.lousycoder.com/sitemap2.xml
+
