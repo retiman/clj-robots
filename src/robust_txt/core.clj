@@ -53,9 +53,10 @@
 (defn- parse-value
   "Parse the value in a directive."
   [key value]
-  (cond (nil? value)   ""
-        (int-key? key) ((comp utils/parse-int su/trim) value)
-        :default       (su/trim value)))
+  (cond (nil? value)          ""
+        (= key :crawl-delay)  ((comp utils/parse-int su/trim) value)
+        (= key :request-rate) ((comp utils/parse-ratio su/trim) value)
+        :default              (su/trim value)))
 
 (defn- parse-line
   "Parse a line from a robots.txt file."

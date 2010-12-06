@@ -14,7 +14,7 @@ Disallow: /mif/tif/psd/
 Allow: /gif/png/img/
 
 Crawl-delay: 10
-Request-rate: 5
+Request-rate: 1/5
 # Here's another comment!
 
 Sitemap: http://www.lousycoder.com/sitemap1.xml
