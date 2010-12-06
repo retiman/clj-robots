@@ -5,3 +5,5 @@ Crawl-delay: Not a number!
 
 Allow: /foobar/ # This is a real directive
 Allow # Uh oh, this one is no good : /foobaz
+
+Request-rate: Not a number!
