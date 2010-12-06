@@ -26,6 +26,7 @@
   (let [lines (get-lines "robust_txt/test/robots.txt")
         expected {:request-rate 5
                   :crawl-delay 10
+                  :sitemap []
                   "*"
                     [[:allow "/images/foo.jpg"]
                      [:disallow "/cgi-bin/"]

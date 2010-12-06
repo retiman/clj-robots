@@ -27,6 +27,7 @@
   [directives user-agent value]
   (dosync
     (ref-set user-agent value)
+    (alter directives assoc :sitemap [])
     (alter directives assoc @user-agent [])))
 
 (defn- process-permission
@@ -36,6 +37,13 @@
     (let [permissions (@directives @user-agent)]
       (alter directives
              assoc @user-agent (vec (conj permissions [key value]))))))
+
+(defn- process-sitemap
+  "Add a sitemap."
+  [directives value]
+  (let [sitemap (get @directives :sitemap)]
+    (dosync
+      (alter directives assoc :sitemap (vec (conj sitemap value))))))
 
 (defn- parse-key
   "Parse the key in a directive."
@@ -69,6 +77,8 @@
             nil
           (= key :user-agent)
             (process-user-agent directives user-agent value)
+          (= key :sitemap)
+            (process-sitemap directives value)
           (contains? #{:allow :disallow} key)
             (process-permission directives user-agent key value)
           :default
