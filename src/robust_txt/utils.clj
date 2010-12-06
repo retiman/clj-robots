@@ -29,6 +29,16 @@
   ((comp su/split-lines stream-to-string load-resource) resource))
 
 (defn parse-int
-  "Convert a String to an integer or return 0."
+  "Convert a String to an Integer."
   [s]
   (try (Integer/parseInt s) (catch NumberFormatException e nil)))
+
+(defn parse-ratio
+  "Convert a String to a Ratio."
+  [s]
+  (let [[a b] (su/split s #"/" 2)
+        p     (parse-int a)
+        q     (parse-int b)]
+    (cond (nil? p) nil
+          (nil? q) nil
+          :default (/ p q))))
