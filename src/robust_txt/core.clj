@@ -17,11 +17,6 @@
   [line]
   (su/replace line #"#.*$" ""))
 
-(defn- int-key?
-  "Returns true if this directive's value should be parsed as an Integer."
-  [key]
-  (contains? #{:crawl-delay :request-rate} key))
-
 (defn- process-user-agent
   "Set the current user-agent and add it to the list of user-agents."
   [directives user-agent value]
