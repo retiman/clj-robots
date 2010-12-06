@@ -33,8 +33,8 @@
 (defn- process-permission
   "Set an allow or disallow directive for the current user-agent."
   [directives user-agent key value]
-  (dosync
-    (let [permissions (@directives @user-agent)]
+  (let [permissions (@directives @user-agent)]
+    (dosync
       (alter directives
              assoc @user-agent (vec (conj permissions [key value]))))))
 
