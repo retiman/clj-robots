@@ -1,7 +1,7 @@
 (ns robust-txt.test.core
   (:use
     [robust-txt.core]
-    [robust-txt.utils :only (load-resource get-lines)]
+    [robust-txt.utils :only (get-lines)]
     [robust-txt.test.utils :only (refer-private)]
     [clojure.test])
   (:require
