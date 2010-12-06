@@ -29,7 +29,7 @@
     (ref-set user-agent value)
     (alter directives assoc @user-agent [])))
 
-(defn- process-directive
+(defn- process-permission
   "Set an allow or disallow directive for the current user-agent."
   [directives user-agent key value]
   (dosync
@@ -70,7 +70,7 @@
           (= key :user-agent)
             (process-user-agent directives user-agent value)
           (contains? #{:allow :disallow} key)
-            (process-directive directives user-agent key value)
+            (process-permission directives user-agent key value)
           :default
             (dosync (alter directives assoc key value)))))
     (dosync
