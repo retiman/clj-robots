@@ -1,6 +1,6 @@
-(ns robust-txt.core
+(ns clj-robots.core
   (:require
-    [robust-txt.utils :as utils]
+    [clj-robots.utils :as utils]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as su]
     [clj-http.client :as client])

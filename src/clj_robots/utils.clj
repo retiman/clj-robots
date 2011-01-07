@@ -1,4 +1,4 @@
-(ns robust-txt.utils
+(ns clj-robots.utils
   (:require
     [clojure.contrib.duck-streams :as ds]
     [clojure.contrib.io :as io]

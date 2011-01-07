@@ -1,8 +1,8 @@
-(ns robust-txt.test.core
+(ns clj-robots.test.core
   (:use
-    [robust-txt.core]
-    [robust-txt.utils :only (get-lines)]
-    [robust-txt.test.utils :only (refer-private)]
+    [clj-robots.core]
+    [clj-robots.utils :only (get-lines)]
+    [clj-robots.test.utils :only (refer-private)]
     [clojure.test])
   (:require
     [clojure.contrib.str-utils2 :as su])
@@ -10,7 +10,7 @@
 
 (set! *warn-on-reflection* true)
 
-(refer-private 'robust-txt.core)
+(refer-private 'clj-robots.core)
 
 (deftest test-trim-comment
   (is (= "hello there " (trim-comment "hello there #this is a comment!"))))
@@ -23,7 +23,7 @@
     (is (nil? (parse-line "")))))
 
 (deftest test-parse-lines
-  (let [lines (get-lines "robust_txt/test/robots.txt")
+  (let [lines (get-lines "clj_robots/test/robots.txt")
         expected {:request-rate (/ 1 5)
                   :crawl-delay 10
                   :sitemap ["http://www.lousycoder.com/sitemap1.xml"
@@ -46,7 +46,7 @@
     (is (= expected result))))
 
 (deftest test-parse-lines-bad
-  (let [lines (get-lines "robust_txt/test/robots-bad.txt")
+  (let [lines (get-lines "clj_robots/test/robots-bad.txt")
         ds (parse-lines lines)
         expected {"*" [[:allow "/foobar/"]]}
         result (dissoc ds :modified-time)]
@@ -56,9 +56,9 @@
   (do
     (is {"*" []} (dissoc (parse-robots "") :modified-time))
     (is {"*" []} (dissoc (parse-robots [""]) :modified-time))
-    (is {"*" []} (dissoc (parse-robots (get-lines "robust_txt/test/empty.txt"))
+    (is {"*" []} (dissoc (parse-robots (get-lines "clj_robots/test/empty.txt"))
                    :modified-time))
-    (is (contains? (parse-robots (get-lines "robust_txt/test/robots.txt"))
+    (is (contains? (parse-robots (get-lines "clj_robots/test/robots.txt"))
                    "google"))))
 
 (deftest test-crawlable?

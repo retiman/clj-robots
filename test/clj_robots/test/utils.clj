@@ -1,4 +1,4 @@
-(ns robust-txt.test.utils
+(ns clj-robots.test.utils
   (:gen-class))
 
 (defn refer-private

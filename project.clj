@@ -1,4 +1,4 @@
-(defproject robust-txt "0.3.1"
+(defproject clj-robots "0.4.0"
   :description "A robots.txt parser."
   :target-dir "build"
   :compile-path "build/classes"
