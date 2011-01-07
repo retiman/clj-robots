@@ -1,7 +1,5 @@
 (defproject clj-robots "0.4.0"
   :description "A robots.txt parser."
-  :target-dir "build"
-  :compile-path "build/classes"
   :repositories
     {"clojars" "http://clojars.org/repo"}
   :dependencies
