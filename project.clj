@@ -1,5 +1,6 @@
 (defproject clj-robots "0.4.0"
   :description "A robots.txt parser."
+  :warn-on-reflection true
   :repositories
     {"clojars" "http://clojars.org/repo"}
   :dependencies

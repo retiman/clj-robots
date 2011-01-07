@@ -8,8 +8,6 @@
     [clojure.contrib.str-utils2 :as su])
   (:gen-class))
 
-(set! *warn-on-reflection* true)
-
 (refer-private 'clj-robots.core)
 
 (deftest test-trim-comment

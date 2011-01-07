@@ -3,14 +3,12 @@
     [clj-robots.utils :as utils]
     [clojure.contrib.io :as io]
     [clojure.contrib.str-utils2 :as su]
-    [clj-http.client :as client])
+    [clj-httpc.client :as client])
   (:import
     [clojure.lang Sequential]
     [java.io InputStream]
     [java.net URL])
   (:gen-class))
-
-;(set! *warn-on-reflection* true)
 
 (defn- trim-comment
   "Removes everything after the first # character in a String."
