@@ -122,3 +122,7 @@
 (defmethod parse-robots
   InputStream [stream]
   (parse-robots (utils/stream-to-string stream)))
+
+(defmethod parse-robots
+  nil [arg]
+  nil)

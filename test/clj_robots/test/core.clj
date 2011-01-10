@@ -52,6 +52,7 @@
 
 (deftest test-parse-robots
   (do
+    (is (nil? (parse-robots nil)))
     (is {"*" []} (dissoc (parse-robots "") :modified-time))
     (is {"*" []} (dissoc (parse-robots [""]) :modified-time))
     (is {"*" []} (dissoc (parse-robots (get-lines "clj_robots/test/empty.txt"))
