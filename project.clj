@@ -1,4 +1,4 @@
-(defproject clj-robots "0.4.0"
+(defproject clj-robots "0.4.1"
   :description "A robots.txt parser."
   :warn-on-reflection true
   :repositories
