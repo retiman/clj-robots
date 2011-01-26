@@ -7,4 +7,4 @@
     [[org.clojure/clojure "1.2.0"]
      [org.clojure/clojure-contrib "1.2.0"]
      [commons-io/commons-io "2.0"]
-     [clj-httpc "1.3.0"]])
+     [clj-httpc "1.5.6"]])
