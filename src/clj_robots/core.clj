@@ -62,7 +62,7 @@
   (let [[left right]  (su/split (trim-comment line) #":" 2)
         key           (parse-key left)
         value         (parse-value key right)]
-    (if (= "" value) nil [key value])))
+    (if (not= "" value) [key value])))
 
 (defn- parse-lines
   "Parse the lines of the robots.txt file."
