@@ -10,6 +10,9 @@
     [java.net URL])
   (:gen-class))
 
+(def directive-keys
+  #{"user-agent" "allow" "disallow" "crawl-delay" "request-rate" "sitemap"})
+
 (defn- trim-comment
   "Removes everything after the first # character in a String."
   [line]
@@ -41,7 +44,9 @@
 (defn- parse-key
   "Parse the key in a directive."
   [key]
-  (keyword (su/lower-case (su/trim key))))
+  (let [k (su/lower-case (su/trim key))]
+    (if (contains? directive-keys k)
+      (keyword k))))
 
 (defn- parse-value
   "Parse the value in a directive."
