@@ -1,0 +1,217 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Clojure documentation browser</title><style>
+.library
+{
+  padding: 0.5em 0 0 0 
+}
+.all-libs-toggle,.library-contents-toggle
+{
+ font-size: small;
+}
+.all-libs-toggle a,.library-contents-toggle a
+{
+ color: white
+}
+.library-member-doc-whitespace
+{
+ white-space: pre
+}
+.library-member-source-toggle
+{
+  font-size: small;
+  margin-top: 0.5em
+}
+.library-member-source
+{
+  display: none;
+  border-left: solid lightblue 
+}
+.library-member-docs
+{
+  font-family:monospace
+}
+.library-member-arglists
+{
+  font-family: monospace
+}
+.library-member-type
+{
+  font-weight: bold; 
+  font-size: small;
+  font-style: italic;
+  color: darkred
+}
+.lib-links
+{
+  margin: 0 0 1em 0
+}
+
+.lib-link-header
+{
+  color: white;
+  background: darkgreen;
+  width: 100%
+}
+
+.library-name 
+{ 
+  color: white;
+  background: darkblue;
+  width: 100%
+}
+
+.missing-library
+{
+  color: darkred; 
+  margin: 0 0 1em 0 
+}
+
+.library-members
+{
+  list-style: none
+}
+
+.library-member-name
+{
+  font-weight: bold;
+  font-size: 105%
+}</style><script language="JavaScript" type="text/javascript"> // <![CDATA[
+
+function getElem(id)
+{
+  if( document.getElementById )
+  {
+    return document.getElementById( id )
+  }
+  else if ( document.all )
+  {
+    return eval( 'document.all.' + id )
+  }
+  else
+    return false;
+}
+
+function setDisplayStyle(id,displayStyle)
+{
+  var elem = getElem (id)
+  if (elem)
+  {
+    elem.style.display = displayStyle
+  }
+
+}
+
+function setLinkToggleText (id, text)
+{
+ var elem = getElem (id)
+ if (elem)
+ {
+   elem.innerHTML = text
+ }
+}
+
+function collapse(id)
+{
+  setDisplayStyle (id, 'none')
+}
+
+function expand (id)
+{
+  setDisplayStyle (id, 'block')
+}
+
+function toggleSource( id )
+{
+  toggle(id, 'linkto-' + id, 'Hide Source', 'Show Source')
+}
+
+function toggle(targetid, linkid, textWhenOpen, textWhenClosed)
+{
+  var elem = getElem (targetid)
+  var link = getElem (linkid)
+
+  if (elem && link)
+  {
+    var isOpen = false
+    if (elem.style.display == '')
+    {
+      isOpen = link.innerHTML == textWhenOpen
+    }
+    else if( elem.style.display == 'block' )
+    {
+      isOpen = true
+    }
+    
+    if (isOpen)
+    {
+      elem.style.display = 'none'
+      link.innerHTML = textWhenClosed
+    }
+    else
+    {
+      elem.style.display = 'block'
+      link.innerHTML = textWhenOpen
+    }
+  }
+}
+
+      //]]>
+</script><script language="JavaScript" type="text/javascript">// <![CDATA[!
+function expandAllNamespaces()
+{
+expand(&apos;library-contents-clj-robots.core&apos;);
+setLinkToggleText(&apos;library-contents-toggle-clj-robots.core&apos;, &apos;-&apos;);
+expand(&apos;library-contents-clj-robots.utils&apos;);
+setLinkToggleText(&apos;library-contents-toggle-clj-robots.utils&apos;, &apos;-&apos;);
+
+}function collapseAllNamespaces()
+{
+collapse(&apos;library-contents-clj-robots.core&apos;);
+setLinkToggleText(&apos;library-contents-toggle-clj-robots.core&apos;, &apos;+&apos;);
+collapse(&apos;library-contents-clj-robots.utils&apos;);
+setLinkToggleText(&apos;library-contents-toggle-clj-robots.utils&apos;, &apos;+&apos;);
+
+}
+// ]]></script></head><body><div class="lib-links"><div class="lib-link-header">Namespaces<span class="all-libs-toggle"> [ <a href="javascript:expandAllNamespaces()">Expand All</a> ] [ <a href="javascript:collapseAllNamespaces()">Collapse All</a> ]</span></div><a class="lib-link" href="#library-clj-robots.core">clj-robots.core</a> <a class="lib-link" href="#library-clj-robots.utils">clj-robots.utils</a></div><div class="library"><a name="library-clj-robots.core"/><div class="library-name"><span class="library-contents-toggle">[ <a id="library-contents-toggle-clj-robots.core" href="javascript:toggle(&apos;library-contents-clj-robots.core&apos;, &apos;library-contents-toggle-clj-robots.core&apos;, &apos;-&apos;, &apos;+&apos;)">-</a> ] </span>clj-robots.core</div><div class="library-contents" id="library-contents-clj-robots.core"><div class="library-member-links"><a class="lib-member-link" href="#member-clj-robots.core-crawlable?">crawlable?</a> <a class="lib-member-link" href="#member-clj-robots.core-get-robots">get-robots</a> <a class="lib-member-link" href="#member-clj-robots.core-parse-robots">parse-robots</a></div><ol class="library-members"><li class="library-member"><a name="member-clj-robots.core-crawlable?"/><dl class="library-member-table"><dt class="library-member-name">crawlable?</dt><dd><div class="library-member-info"><span class="library-member-type">fn</span> <span class="library-member-arglists">([directives path &amp; {:keys [user-agent], :or {user-agent &quot;*&quot;}}])</span></div><div class="library-member-docs"><div class="library-member-doc-line">Returns true if a list of directives allows the path to be crawled using</div><div class="library-member-doc-line">  this interpretation of robots.txt:</div><div class="library-member-doc-line"><span class="library-member-doc-whitespace"> </span></div><div class="library-member-doc-line">  http://www.robotstxt.org/</div><div class="library-member-doc-line"><span class="library-member-doc-whitespace"> </span></div><div class="library-member-doc-line">  Note that allow directives are completely ignored and only the first</div><div class="library-member-doc-line">  disallow directive is consulted to determine if a path can be crawled.</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.core-crawlable?&apos;)" id="linkto-membersource-clj-robots.core-crawlable?">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.core-crawlable?"><pre>(defn crawlable?
+  &quot;Returns true if a list of directives allows the path to be crawled using...&quot;
+  [directives ^String path &amp; {:keys [user-agent] :or {user-agent &quot;*&quot;}}]
+  (let [select-disallows #(= :disallow (first %))
+        permissions (filter select-disallows (get directives user-agent))]
+    (and (nil? (some #(.startsWith path (last %)) permissions))
+         (if (not= &quot;*&quot; user-agent)
+           (crawlable? directives path :user-agent &quot;*&quot;)
+           true))))</pre></div></div></dd></dl></li><li class="library-member"><a name="member-clj-robots.core-get-robots"/><dl class="library-member-table"><dt class="library-member-name">get-robots</dt><dd><div class="library-member-info"><span class="library-member-type">fn</span> <span class="library-member-arglists">([url])</span></div><div class="library-member-docs"><div class="library-member-doc-line">Download robots.txt for a particular URL.</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.core-get-robots&apos;)" id="linkto-membersource-clj-robots.core-get-robots">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.core-get-robots"><pre>(defn get-robots
+  &quot;Download robots.txt for a particular URL.&quot;
+  [^URL url]
+  (try
+    (let [protocol (.getProtocol url)
+          domain (.getHost url)
+          response (client/get (str protocol &quot;://&quot; domain &quot;/robots.txt&quot;))]
+      (response :body))
+    (catch Exception e &quot;&quot;)))</pre></div></div></dd></dl></li><li class="library-member"><a name="member-clj-robots.core-parse-robots"/><dl class="library-member-table"><dt class="library-member-name">parse-robots</dt><dd><div class="library-member-info"><span class="library-member-type">multi</span> <span class="library-member-arglists"></span></div><div class="library-member-docs"><div class="library-member-doc-line">Parse robots.txt; returns a data structure to pass to crawlable?</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.core-parse-robots&apos;)" id="linkto-membersource-clj-robots.core-parse-robots">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.core-parse-robots"><pre>(defmulti parse-robots
+  &quot;Parse robots.txt; returns a data structure to pass to crawlable?&quot;
+  class)</pre></div></div></dd></dl></li></ol></div></div><div class="library"><a name="library-clj-robots.utils"/><div class="library-name"><span class="library-contents-toggle">[ <a id="library-contents-toggle-clj-robots.utils" href="javascript:toggle(&apos;library-contents-clj-robots.utils&apos;, &apos;library-contents-toggle-clj-robots.utils&apos;, &apos;-&apos;, &apos;+&apos;)">-</a> ] </span>clj-robots.utils</div><div class="library-contents" id="library-contents-clj-robots.utils"><div class="library-member-links"><a class="lib-member-link" href="#member-clj-robots.utils-get-lines">get-lines</a> <a class="lib-member-link" href="#member-clj-robots.utils-load-resource">load-resource</a> <a class="lib-member-link" href="#member-clj-robots.utils-parse-int">parse-int</a> <a class="lib-member-link" href="#member-clj-robots.utils-parse-ratio">parse-ratio</a> <a class="lib-member-link" href="#member-clj-robots.utils-stream-to-string">stream-to-string</a></div><ol class="library-members"><li class="library-member"><a name="member-clj-robots.utils-get-lines"/><dl class="library-member-table"><dt class="library-member-name">get-lines</dt><dd><div class="library-member-info"><span class="library-member-type">fn</span> <span class="library-member-arglists">([resource])</span></div><div class="library-member-docs"><div class="library-member-doc-line">Load a resource, convert it to a string, and return a vector of lines.</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.utils-get-lines&apos;)" id="linkto-membersource-clj-robots.utils-get-lines">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.utils-get-lines"><pre>(defn get-lines
+  &quot;Load a resource, convert it to a string, and return a vector of lines.&quot;
+  [resource]
+  ((comp su/split-lines stream-to-string load-resource) resource))</pre></div></div></dd></dl></li><li class="library-member"><a name="member-clj-robots.utils-load-resource"/><dl class="library-member-table"><dt class="library-member-name">load-resource</dt><dd><div class="library-member-info"><span class="library-member-type">fn</span> <span class="library-member-arglists">([path])</span></div><div class="library-member-docs"><div class="library-member-doc-line">Return a resource located on path.</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.utils-load-resource&apos;)" id="linkto-membersource-clj-robots.utils-load-resource">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.utils-load-resource"><pre>(defn load-resource
+  &quot;Return a resource located on path.&quot;
+  [path]
+  (let [t (Thread/currentThread)
+        loader (.getContextClassLoader t)]
+    (.getResourceAsStream loader path)))</pre></div></div></dd></dl></li><li class="library-member"><a name="member-clj-robots.utils-parse-int"/><dl class="library-member-table"><dt class="library-member-name">parse-int</dt><dd><div class="library-member-info"><span class="library-member-type">fn</span> <span class="library-member-arglists">([s])</span></div><div class="library-member-docs"><div class="library-member-doc-line">Convert a String to an Integer.</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.utils-parse-int&apos;)" id="linkto-membersource-clj-robots.utils-parse-int">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.utils-parse-int"><pre>(defn parse-int
+  &quot;Convert a String to an Integer.&quot;
+  [s]
+  (try (Integer/parseInt s) (catch NumberFormatException e nil)))</pre></div></div></dd></dl></li><li class="library-member"><a name="member-clj-robots.utils-parse-ratio"/><dl class="library-member-table"><dt class="library-member-name">parse-ratio</dt><dd><div class="library-member-info"><span class="library-member-type">fn</span> <span class="library-member-arglists">([s])</span></div><div class="library-member-docs"><div class="library-member-doc-line">Convert a String to a Ratio.</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.utils-parse-ratio&apos;)" id="linkto-membersource-clj-robots.utils-parse-ratio">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.utils-parse-ratio"><pre>(defn parse-ratio
+  &quot;Convert a String to a Ratio.&quot;
+  [s]
+  (let [t (map parse-int (su/split s #&quot;/&quot; 2))
+        p (first t)
+        q (second t)]
+    (cond (nil? p) nil
+          (nil? q) nil
+          :default (/ p q))))</pre></div></div></dd></dl></li><li class="library-member"><a name="member-clj-robots.utils-stream-to-string"/><dl class="library-member-table"><dt class="library-member-name">stream-to-string</dt><dd><div class="library-member-info"><span class="library-member-type">fn</span> <span class="library-member-arglists">([stream])</span></div><div class="library-member-docs"><div class="library-member-doc-line">Convert an InputStream to a String.</div></div><div class="library-member-source-section"><div class="library-member-source-toggle">[ <a href="javascript:toggleSource(&apos;membersource-clj-robots.utils-stream-to-string&apos;)" id="linkto-membersource-clj-robots.utils-stream-to-string">Show Source</a> ]</div><div class="library-member-source" id="membersource-clj-robots.utils-stream-to-string"><pre>(defn stream-to-string
+  &quot;Convert an InputStream to a String.&quot;
+  [stream]
+  (let [writer (new StringWriter)]
+    (do
+      (IOUtils/copy stream writer)
+      (.toString writer))))</pre></div></div></dd></dl></li></ol></div></div></body></html>
