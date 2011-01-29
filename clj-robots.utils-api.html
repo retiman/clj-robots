@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>clj-robots - Overview</title>
+    <title>clj-robots.utils API reference (clj-robots)</title>
     <link href="static/favicon.png" rel="icon" />
     <link href="static/favicon.png" rel="shortcut icon" />
     <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
@@ -46,73 +46,81 @@ namespace.
                 <div id="right-sidebar"><div id="toc">
   <h1 class="nopad">Table of Contents</h1>
   <div style="margin-left: 1em;" class="toc-section">
-    <a href="#clj-robots.core">clj-robots.core</a>
-    
-    <br />
-  </div><div style="margin-left: 1em;" class="toc-section">
-    <a href="#clj-robots.strategy.bing">clj-robots.strategy.bing</a>
-    
-    <br />
-  </div><div style="margin-left: 1em;" class="toc-section">
-    <a href="#clj-robots.strategy.google">clj-robots.strategy.google</a>
-    
-    <br />
-  </div><div style="margin-left: 1em;" class="toc-section">
-    <a href="#clj-robots.utils">clj-robots.utils</a>
-    
+    <a href="#toc0">Overview</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.utils/get-lines">get-lines</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.utils/load-resource">load-resource</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.utils/parse-int">parse-int</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.utils/parse-ratio">parse-ratio</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.utils/stream-to-string">stream-to-string</a>
+    </div>
     <br />
   </div>
 </div>
 </div>
-                <div id="content-tag"><h1 id="toc0">An Overview of the <span id="header-project">clj-robots</span> API</h1>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">clj-robots.utils</span></h1>
+by <span id="author">Unknown</span><br />
+<br />Usage:
+<pre>
+(ns your-namespace
+  (:require <span id="long-name">clj-robots.utils</span>))
+</pre><pre>
+</pre><h2>Overview</h2>
+<pre id="namespace-docstr"></pre>
 <br />
-<div id="project-description">A robots.txt parser.</div>
-<br />
-<div id="namespace-entry">
+<h2>Public Variables and Functions</h2>
+<div id="var-entry">
   <br />
   <hr />
-  <h2 id="clj-robots.core">clj-robots.core</h2>
-  by <span id="author">unknown author</span><br />
-  <a href="clj-robots.core-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <h2 id="clj-robots.utils/get-lines">get-lines</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (get-lines resource)
+</pre>
+  <pre id="var-docstr">Load a resource, convert it to a string, and return a vector of lines.</pre>
   
-  Public variables and functions:
-  <span id="var-link"><a href="clj-robots.core-api.html#clj-robots.core/crawlable?" id="var-tag">crawlable?</a> </span><span id="var-link"><a href="clj-robots.core-api.html#clj-robots.core/get-robots" id="var-tag">get-robots</a> </span><span id="var-link"><a href="clj-robots.core-api.html#clj-robots.core/parse-robots" id="var-tag">parse-robots</a> </span><br />
-  
-</div><div id="namespace-entry">
+</div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="clj-robots.strategy.bing">clj-robots.strategy.bing</h2>
-  by <span id="author">unknown author</span><br />
-  <a href="clj-robots.strategy.bing-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <h2 id="clj-robots.utils/load-resource">load-resource</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (load-resource path)
+</pre>
+  <pre id="var-docstr">Return a resource located on path.</pre>
   
-  Public variables and functions:
-  <br />
-  
-</div><div id="namespace-entry">
+</div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="clj-robots.strategy.google">clj-robots.strategy.google</h2>
-  by <span id="author">unknown author</span><br />
-  <a href="clj-robots.strategy.google-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <h2 id="clj-robots.utils/parse-int">parse-int</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (parse-int s)
+</pre>
+  <pre id="var-docstr">Convert a String to an Integer.</pre>
   
-  Public variables and functions:
-  <br />
-  
-</div><div id="namespace-entry">
+</div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="clj-robots.utils">clj-robots.utils</h2>
-  by <span id="author">unknown author</span><br />
-  <a href="clj-robots.utils-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <h2 id="clj-robots.utils/parse-ratio">parse-ratio</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (parse-ratio s)
+</pre>
+  <pre id="var-docstr">Convert a String to a Ratio.</pre>
   
-  Public variables and functions:
-  <span id="var-link"><a href="clj-robots.utils-api.html#clj-robots.utils/get-lines" id="var-tag">get-lines</a> </span><span id="var-link"><a href="clj-robots.utils-api.html#clj-robots.utils/load-resource" id="var-tag">load-resource</a> </span><span id="var-link"><a href="clj-robots.utils-api.html#clj-robots.utils/parse-int" id="var-tag">parse-int</a> </span><span id="var-link"><a href="clj-robots.utils-api.html#clj-robots.utils/parse-ratio" id="var-tag">parse-ratio</a> </span><span id="var-link"><a href="clj-robots.utils-api.html#clj-robots.utils/stream-to-string" id="var-tag">stream-to-string</a> </span><br />
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="clj-robots.utils/stream-to-string">stream-to-string</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (stream-to-string stream)
+</pre>
+  <pre id="var-docstr">Convert an InputStream to a String.</pre>
   
 </div>
+
+
 </div>
               </div>
             </div>
