@@ -86,13 +86,17 @@
       (alter directives assoc :modified-time (System/currentTimeMillis)))
     @directives))
 
+(defn get-robots-url [page-url]
+  (let [protocol (.getProtocol page-url)
+        domain (.getHost page-url)]
+    (str protocol "://" domain "/robots.txt")))
+
 (defn get-robots
   "Download robots.txt for a particular URL."
   [^URL url]
   (try
-    (let [protocol (.getProtocol url)
-          domain (.getHost url)
-          response (client/get (str protocol "://" domain "/robots.txt"))]
+    (let [robots-url (get-robots-url url)
+          response (client/get robots-url)]
       (response :body))
     (catch Exception e "")))
 
