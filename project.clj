@@ -1,5 +1,6 @@
 (defproject clj-robots "0.4.3"
   :description "A robots.txt parser."
+  :min-lein-version "1.4.2"
   :warn-on-reflection true
   :repositories
     {"clojars" "http://clojars.org/repo"}
@@ -7,4 +8,6 @@
     [[org.clojure/clojure "1.2.0"]
      [org.clojure/clojure-contrib "1.2.0"]
      [commons-io/commons-io "2.0"]
-     [clj-httpc "1.5.7"]])
+     [clj-httpc "1.5.7"]]
+  :dev-dependencies
+    [[autodoc "0.7.1"]])
