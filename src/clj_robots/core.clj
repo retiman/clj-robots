@@ -86,19 +86,30 @@
       (alter directives assoc :modified-time (System/currentTimeMillis)))
     @directives))
 
-(defn get-robots-url [page-url]
-  (let [protocol (.getProtocol page-url)
-        domain (.getHost page-url)]
+(defmulti get-robots-url
+  class)
+
+(defmethod get-robots-url URL [url]
+  (let [protocol (.getProtocol url)
+        domain (.getHost url)]
     (str protocol "://" domain "/robots.txt")))
 
-(defn get-robots
+(defmethod get-robots-url String [url]
+  (get-robots-url (io/as-url url)))
+
+(defmulti get-robots
   "Download robots.txt for a particular URL."
-  [^URL url]
+  class)
+
+(defmethod get-robots URL [url]
   (try
     (let [robots-url (get-robots-url url)
           response (client/get robots-url)]
       (response :body))
     (catch Exception e "")))
+
+(defmethod get-robots String [url]
+  (get-robots (io/as-url url)))
 
 (defn crawlable?
   "Returns true if a list of directives allows the path to be crawled using
