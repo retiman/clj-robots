@@ -1,4 +1,5 @@
 (ns clj-robots.core
+  (:refer-clojure :exclude (get))
   (:require
     [clj-robots.utils :as utils]
     [clojure.contrib.io :as io]
@@ -9,6 +10,8 @@
     [java.io InputStream]
     [java.net URL])
   (:gen-class))
+
+(def mget clojure.core/get)
 
 (def directive-keys
   #{"user-agent" "allow" "disallow" "crawl-delay" "request-rate" "sitemap"})
@@ -37,7 +40,7 @@
 (defn- process-sitemap
   "Add a sitemap."
   [directives value]
-  (let [sitemap (get @directives :sitemap)]
+  (let [sitemap (mget @directives :sitemap)]
     (dosync
       (alter directives assoc :sitemap (vec (conj sitemap value))))))
 
@@ -86,31 +89,31 @@
       (alter directives assoc :modified-time (System/currentTimeMillis)))
     @directives))
 
-(defmulti get-robots-url
+(defmulti get-url
   "Returns the robots.txt URL for a particular host (given a URL)."
   class)
 
-(defmethod get-robots-url URL [url]
+(defmethod get-url URL [url]
   (let [protocol (.getProtocol url)
         domain (.getHost url)]
     (str protocol "://" domain "/robots.txt")))
 
-(defmethod get-robots-url String [url]
-  (get-robots-url (io/as-url url)))
+(defmethod get-url String [url]
+  (get-url (io/as-url url)))
 
-(defmulti get-robots
+(defmulti get
   "Download robots.txt for a particular URL."
   class)
 
-(defmethod get-robots URL [url]
+(defmethod get URL [url]
   (try
-    (let [robots-url (get-robots-url url)
+    (let [robots-url (get-url url)
           response (client/get robots-url)]
       (response :body))
     (catch Exception e "")))
 
-(defmethod get-robots String [url]
-  (get-robots (io/as-url url)))
+(defmethod get String [url]
+  (get (io/as-url url)))
 
 (defn crawlable?
   "Returns true if a list of directives allows the path to be crawled using
@@ -122,28 +125,43 @@
   disallow directive is consulted to determine if a path can be crawled."
   [directives ^String path & {:keys [user-agent] :or {user-agent "*"}}]
   (let [select-disallows #(= :disallow (first %))
-        permissions (filter select-disallows (get directives user-agent))]
+        permissions (filter select-disallows (mget directives user-agent))]
     (and (nil? (some #(.startsWith path (last %)) permissions))
          (if (not= "*" user-agent)
            (crawlable? directives path :user-agent "*")
            true))))
 
-(defmulti parse-robots
+(defmulti parse
   "Parse robots.txt; returns a data structure to pass to crawlable?"
   class)
 
-(defmethod parse-robots
+(defmethod parse
   Sequential [lines]
   (parse-lines lines))
 
-(defmethod parse-robots
+(defmethod parse
   String [string]
-  (parse-robots (su/split-lines string)))
+  (parse (su/split-lines string)))
 
-(defmethod parse-robots
+(defmethod parse
   InputStream [stream]
-  (parse-robots (utils/stream-to-string stream)))
+  (parse (utils/stream-to-string stream)))
 
-(defmethod parse-robots
+(defmethod parse
   nil [arg]
   nil)
+
+(def
+  ^{:doc "DEPRECATED: Prefer get."
+    :deprecated "0.5.0"}
+  get-robots get)
+
+(def
+  ^{:doc "DEPRECATED: Prefer get-url."
+    :deprecated "0.5.0"}
+  get-robots-url get-url)
+
+(def
+  ^{:doc "DEPRECATED: Prefer parse."
+    :deprecated "0.5.0"}
+  parse-robots parse)

@@ -1,4 +1,5 @@
 (ns clj-robots.test.core
+  (:refer-clojure :exclude (get))
   (:use
     [clj-robots.core]
     [clj-robots.utils :only (get-lines)]
@@ -50,15 +51,14 @@
         result (dissoc ds :modified-time)]
     (is (= expected result))))
 
-(deftest test-parse-robots
+(deftest test-parse
   (do
-    (is (nil? (parse-robots nil)))
-    (is {"*" []} (dissoc (parse-robots "") :modified-time))
-    (is {"*" []} (dissoc (parse-robots [""]) :modified-time))
-    (is {"*" []} (dissoc (parse-robots (get-lines "clj_robots/test/empty.txt"))
+    (is (nil? (parse nil)))
+    (is {"*" []} (dissoc (parse "") :modified-time))
+    (is {"*" []} (dissoc (parse [""]) :modified-time))
+    (is {"*" []} (dissoc (parse (get-lines "clj_robots/test/empty.txt"))
                    :modified-time))
-    (is (contains? (parse-robots (get-lines "clj_robots/test/robots.txt"))
-                   "google"))))
+    (is (contains? (parse (get-lines "clj_robots/test/robots.txt")) "google"))))
 
 (deftest test-crawlable?
   (do
