@@ -87,6 +87,7 @@
     @directives))
 
 (defmulti get-robots-url
+  "Returns the robots.txt URL for a particular host (given a URL)."
   class)
 
 (defmethod get-robots-url URL [url]
