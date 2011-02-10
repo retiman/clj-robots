@@ -50,9 +50,15 @@ namespace.
     <div style="margin-left: 1em;" class="toc-entry">
       <a href="#clj-robots.core/crawlable?">crawlable?</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.core/get">get</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#clj-robots.core/get-robots">get-robots</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#clj-robots.core/get-robots-url">get-robots-url</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.core/get-url">get-url</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#clj-robots.core/parse">parse</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#clj-robots.core/parse-robots">parse-robots</a>
     </div>
@@ -89,7 +95,7 @@ disallow directive is consulted to determine if a path can be crawled.</pre>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="clj-robots.core/get-robots">get-robots</h2>
+  <h2 id="clj-robots.core/get">get</h2>
   <span id="var-type">multimethod</span><br />
   <pre id="var-usage">No usage documentation available</pre>
   <pre id="var-docstr">Download robots.txt for a particular URL.</pre>
@@ -97,7 +103,23 @@ disallow directive is consulted to determine if a path can be crawled.</pre>
 </div><div id="var-entry">
   <br />
   <hr />
+  <h2 id="clj-robots.core/get-robots">get-robots</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">DEPRECATED: Prefer get.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
   <h2 id="clj-robots.core/get-robots-url">get-robots-url</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">DEPRECATED: Prefer get-url.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="clj-robots.core/get-url">get-url</h2>
   <span id="var-type">multimethod</span><br />
   <pre id="var-usage">No usage documentation available</pre>
   <pre id="var-docstr">Returns the robots.txt URL for a particular host (given a URL).</pre>
@@ -105,10 +127,18 @@ disallow directive is consulted to determine if a path can be crawled.</pre>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="clj-robots.core/parse-robots">parse-robots</h2>
+  <h2 id="clj-robots.core/parse">parse</h2>
   <span id="var-type">multimethod</span><br />
   <pre id="var-usage">No usage documentation available</pre>
   <pre id="var-docstr">Parse robots.txt; returns a data structure to pass to crawlable?</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="clj-robots.core/parse-robots">parse-robots</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">DEPRECATED: Prefer parse.</pre>
   
 </div>
 
