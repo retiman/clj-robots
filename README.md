@@ -7,12 +7,13 @@ USAGE
 =====
 To use, include this in your Clojure program:
 
-    (use 'clj-robots.core)
+    (require '[clojure.contrib.io :as io])
+    (require '[clj-robots.core :as robots])
 
 Save robots.txt from a website:
 
     (def robots
-      (parse-robots (get-robots (io/as-url "http://www.lousycoder.com"))))
+      ((comp robots/parse robots/get io/as-url) "http://www.google.com"))
     -> #'user/robots
 
 Now check if any paths are crawlable:
