@@ -10,4 +10,8 @@
      [commons-io/commons-io "2.0"]
      [clj-httpc "1.5.7"]]
   :dev-dependencies
-    [[autodoc "0.7.1"]])
+    [[autodoc "0.7.1"]]
+  :test-selectors
+    {:default (fn [t] (not (:integration t)))
+     :integration :integration
+     :all (fn [_] true)})
