@@ -64,7 +64,8 @@
   (do
     (let [ds {"google"
                 [[:disallow "/foo/"]
-                 [:allow "/bar/"]
+                 [:disallow "/bar/"]
+                 [:allow "/bar/baz.html"]
                  [:disallow "/bar/baz/"]]
               "*"
                 [[:disallow "/bar/"]
@@ -73,6 +74,9 @@
       (is (not (crawlable? ds "/foo/" :user-agent "google")))
       (is (not (crawlable? ds "/bar/" :user-agent "google")))
       (is (not (crawlable? ds "/bar/" :user-agent "*")))
+      (is (not (crawlable? ds "/bar/bif.html" :user-agent "google")))
+      (is (not (crawlable? ds "/bar/baz.html" :user-agent "google")))
+      (is (crawlable? ds "/foo/bar.html"))
       (is (crawlable? ds "/foo/" :user-agent "*")))
     (let [ds {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
       (is (crawlable? ds "/foo"))
