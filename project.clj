@@ -1,4 +1,4 @@
-(defproject clj-robots "0.4.3"
+(defproject clj-robots "0.5.0"
   :description "A robots.txt parser."
   :min-lein-version "1.4.2"
   :warn-on-reflection true
