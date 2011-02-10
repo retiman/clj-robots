@@ -1,5 +1,7 @@
 (ns clj-robots.core
   (:refer-clojure :exclude (get))
+  (:use
+    [clojure.contrib.def])
   (:require
     [clj-robots.utils :as utils]
     [clojure.contrib.io :as io]
@@ -11,9 +13,9 @@
     [java.net URL])
   (:gen-class))
 
-(def mget clojure.core/get)
+(defvar- mget clojure.core/get)
 
-(def directive-keys
+(defvar- directive-keys
   #{"user-agent" "allow" "disallow" "crawl-delay" "request-rate" "sitemap"})
 
 (defn- trim-comment
