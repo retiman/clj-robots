@@ -62,8 +62,14 @@
 
 (deftest test-crawlable?
   (do
-    (let [ds {"google" [[:disallow "/foo/"]]
-              "*" [[:disallow "/bar/"]]}]
+    (let [ds {"google"
+                [[:disallow "/foo/"]
+                 [:allow "/bar/"]
+                 [:disallow "/bar/baz/"]]
+              "*"
+                [[:disallow "/bar/"]
+                 [:allow "/bif/"]
+                 [:disallow "bif/bof/"]]}]
       (is (not (crawlable? ds "/foo/" :user-agent "google")))
       (is (not (crawlable? ds "/bar/" :user-agent "google")))
       (is (not (crawlable? ds "/bar/" :user-agent "*")))
