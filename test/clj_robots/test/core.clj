@@ -79,3 +79,9 @@
       (is (crawlable? ds "/bif/"))
       (is (not (crawlable? ds "/bar/")))
       (is (not (crawlable? ds "/bar/2.html"))))))
+
+(deftest
+  ^{:integration true}
+  test-get
+  (let [robots ((comp parse get) "http://www.google.com")]
+    (is (not (crawlable? robots "/search")))))
