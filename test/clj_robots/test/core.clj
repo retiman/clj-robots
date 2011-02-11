@@ -15,11 +15,10 @@
   (is (= "hello there " (trim-comment "hello there #this is a comment!"))))
 
 (deftest test-parse-line
-  (do
-    (is (= [:user-agent ":*:"]
-           (parse-line "UsEr-AgEnt: :*:# This is a comment")))
-    (is (nil? (parse-line "user-agent*")))
-    (is (nil? (parse-line "")))))
+  (is (= [:user-agent ":*:"]
+         (parse-line "UsEr-AgEnt: :*:# This is a comment")))
+  (is (nil? (parse-line "user-agent*")))
+  (is (nil? (parse-line ""))))
 
 (deftest test-parse-lines
   (let [lines (get-lines "clj_robots/test/robots.txt")
@@ -52,37 +51,35 @@
     (is (= expected result))))
 
 (deftest test-parse
-  (do
-    (is (nil? (parse nil)))
-    (is {"*" []} (dissoc (parse "") :modified-time))
-    (is {"*" []} (dissoc (parse [""]) :modified-time))
-    (is {"*" []} (dissoc (parse (get-lines "clj_robots/test/empty.txt"))
-                   :modified-time))
-    (is (contains? (parse (get-lines "clj_robots/test/robots.txt")) "google"))))
+  (is (nil? (parse nil)))
+  (is {"*" []} (dissoc (parse "") :modified-time))
+  (is {"*" []} (dissoc (parse [""]) :modified-time))
+  (is {"*" []} (dissoc (parse (get-lines "clj_robots/test/empty.txt"))
+                 :modified-time))
+  (is (contains? (parse (get-lines "clj_robots/test/robots.txt")) "google")))
 
 (deftest test-crawlable?
-  (do
-    (let [ds {"google"
-                [[:disallow "/foo/"]
-                 [:disallow "/bar/"]
-                 [:allow "/bar/baz.html"]
-                 [:disallow "/bar/baz/"]]
-              "*"
-                [[:disallow "/bar/"]
-                 [:allow "/bif/"]
-                 [:disallow "bif/bof/"]]}]
-      (is (not (crawlable? ds "/foo/" :user-agent "google")))
-      (is (not (crawlable? ds "/bar/" :user-agent "google")))
-      (is (not (crawlable? ds "/bar/" :user-agent "*")))
-      (is (not (crawlable? ds "/bar/bif.html" :user-agent "google")))
-      (is (not (crawlable? ds "/bar/baz.html" :user-agent "google")))
-      (is (crawlable? ds "/foo/bar.html"))
-      (is (crawlable? ds "/foo/" :user-agent "*")))
-    (let [ds {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
-      (is (crawlable? ds "/foo"))
-      (is (crawlable? ds "/bif/"))
-      (is (not (crawlable? ds "/bar/")))
-      (is (not (crawlable? ds "/bar/2.html"))))))
+  (let [ds {"google"
+              [[:disallow "/foo/"]
+               [:disallow "/bar/"]
+               [:allow "/bar/baz.html"]
+               [:disallow "/bar/baz/"]]
+            "*"
+              [[:disallow "/bar/"]
+               [:allow "/bif/"]
+               [:disallow "bif/bof/"]]}]
+    (is (not (crawlable? ds "/foo/" :user-agent "google")))
+    (is (not (crawlable? ds "/bar/" :user-agent "google")))
+    (is (not (crawlable? ds "/bar/" :user-agent "*")))
+    (is (not (crawlable? ds "/bar/bif.html" :user-agent "google")))
+    (is (not (crawlable? ds "/bar/baz.html" :user-agent "google")))
+    (is (crawlable? ds "/foo/bar.html"))
+    (is (crawlable? ds "/foo/" :user-agent "*")))
+  (let [ds {"*" [[:disallow "/foo/"] [:disallow "/bar/"]]}]
+    (is (crawlable? ds "/foo"))
+    (is (crawlable? ds "/bif/"))
+    (is (not (crawlable? ds "/bar/")))
+    (is (not (crawlable? ds "/bar/2.html")))))
 
 (deftest
   ^{:integration true}
