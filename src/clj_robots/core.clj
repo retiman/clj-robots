@@ -3,9 +3,9 @@
   (:use
     [clojure.contrib.def])
   (:require
-    [clj-robots.utils :as utils]
+    [clojure.string :as s]
     [clojure.contrib.io :as io]
-    [clojure.contrib.str-utils2 :as su]
+    [clj-robots.utils :as utils]
     [clj-httpc.client :as client])
   (:import
     [clojure.lang Sequential]
@@ -21,7 +21,7 @@
 (defn- trim-comment
   "Removes everything after the first # character in a String."
   [line]
-  (su/replace line #"#.*$" ""))
+  (s/replace line #"#.*$" ""))
 
 (defn- process-user-agent
   "Set the current user-agent and add it to the list of user-agents."
@@ -49,7 +49,7 @@
 (defn- parse-key
   "Parse the key in a directive."
   [key]
-  (let [k (su/lower-case (su/trim key))]
+  (let [k (s/lower-case (s/trim key))]
     (if (contains? directive-keys k)
       (keyword k))))
 
@@ -57,14 +57,14 @@
   "Parse the value in a directive."
   [key value]
   (cond (nil? value)          ""
-        (= key :crawl-delay)  ((comp utils/parse-int su/trim) value)
-        (= key :request-rate) ((comp utils/parse-ratio su/trim) value)
-        :default              (su/trim value)))
+        (= key :crawl-delay)  ((comp utils/parse-int s/trim) value)
+        (= key :request-rate) ((comp utils/parse-ratio s/trim) value)
+        :default              (s/trim value)))
 
 (defn- parse-line
   "Parse a line from a robots.txt file."
   [line]
-  (let [[left right]  (su/split (trim-comment line) #":" 2)
+  (let [[left right]  (s/split (trim-comment line) #":" 2)
         key           (parse-key left)
         value         (parse-value key right)]
     (if (not= "" value) [key value])))
@@ -143,7 +143,7 @@
 
 (defmethod parse
   String [string]
-  (parse (su/split-lines string)))
+  (parse (s/split-lines string)))
 
 (defmethod parse
   InputStream [stream]
