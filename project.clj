@@ -8,7 +8,7 @@
     [[org.clojure/clojure "1.2.0"]
      [org.clojure/clojure-contrib "1.2.0"]
      [commons-io/commons-io "2.0"]
-     [clj-httpc "1.5.7"]]
+     [clj-httpc "1.6.0-1"]]
   :dev-dependencies
     [[autodoc "0.7.1"]
      [robert/hooke "1.1.0"]
