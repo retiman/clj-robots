@@ -23,6 +23,21 @@
       (IOUtils/copy stream writer)
       (.toString writer))))
 
+(defn wildcard-to-regex
+  "Convert a wildcard pattern to a Java Pattern."
+  [text]
+  (let [sb (StringBuffer. (count text))]
+    (doseq [c text]
+      (case c
+        \*
+          (.append sb ".*")
+        \?
+          (.append sb ".")
+        \( \) \[ \] \$ \^ \. \{ \} \| \\
+          (do (.append sb "\\") (.append sb))
+        (.append sb c)))
+    (re-pattern (.toString sb))))
+
 (defn get-lines
   "Load a resource, convert it to a string, and return a vector of lines."
   [resource]

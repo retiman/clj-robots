@@ -1,4 +1,4 @@
-(ns clj-robots.test.core
+(ns clj-robots.core-test
   (:refer-clojure :exclude (get))
   (:use
     [clj-robots.core]
@@ -21,7 +21,7 @@
   (is (nil? (parse-line ""))))
 
 (deftest test-parse-lines
-  (let [lines (get-lines "clj_robots/test/robots.txt")
+  (let [lines (get-lines "clj_robots/robots.txt")
         expected {:request-rate (/ 1 5)
                   :crawl-delay 10
                   :sitemap ["http://www.lousycoder.com/sitemap1.xml"
@@ -44,7 +44,7 @@
     (is (= expected result))))
 
 (deftest test-parse-lines-bad
-  (let [lines (get-lines "clj_robots/test/robots-bad.txt")
+  (let [lines (get-lines "clj_robots/robots-bad.txt")
         ds (parse-lines lines)
         expected {"*" [[:allow "/foobar/"]]}
         result (dissoc ds :modified-time)]
@@ -54,9 +54,9 @@
   (is (nil? (parse nil)))
   (is {"*" []} (dissoc (parse "") :modified-time))
   (is {"*" []} (dissoc (parse [""]) :modified-time))
-  (is {"*" []} (dissoc (parse (get-lines "clj_robots/test/empty.txt"))
+  (is {"*" []} (dissoc (parse (get-lines "clj_robots/empty.txt"))
                  :modified-time))
-  (is (contains? (parse (get-lines "clj_robots/test/robots.txt")) "google")))
+  (is (contains? (parse (get-lines "clj_robots/robots.txt")) "google")))
 
 (deftest test-crawlable?
   (let [ds {"google"
