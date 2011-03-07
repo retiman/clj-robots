@@ -28,14 +28,17 @@
   [text]
   (let [sb (StringBuffer. (count text))]
     (doseq [c text]
-      (case c
-        \*
+      (cond
+        (= c \*)
           (.append sb ".*")
-        \?
+        (= c \?)
           (.append sb ".")
-        \( \) \[ \] \$ \^ \. \{ \} \| \\
-          (do (.append sb "\\") (.append sb))
-        (.append sb c)))
+        (contains? #{\( \) \[ \] \$ \^ \. \{ \} \| \\} c)
+          (doto sb
+            (.append \\)
+            (.append c))
+        :default
+          (.append sb c)))
     (re-pattern (.toString sb))))
 
 (defn get-lines
