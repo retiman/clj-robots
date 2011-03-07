@@ -24,7 +24,8 @@
       (.toString writer))))
 
 (defn wildcard-to-regex
-  "Convert a wildcard pattern to a Java Pattern."
+  "Convert a wildcard pattern to a Java Pattern for matching paths.
+  Note that .* is added to the end of the pattern for this reason."
   [text]
   (let [sb (StringBuffer. (count text))]
     (doseq [c text]
@@ -39,6 +40,7 @@
             (.append c))
         :default
           (.append sb c)))
+    (.append sb ".*")
     (re-pattern (.toString sb))))
 
 (defn get-lines
