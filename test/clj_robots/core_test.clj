@@ -5,8 +5,6 @@
     [clj-robots.utils :only (get-lines)]
     [clj-robots.test.utils :only (refer-private)]
     [clojure.test])
-  (:require
-    [clojure.contrib.str-utils2 :as su])
   (:gen-class))
 
 (refer-private 'clj-robots.core)

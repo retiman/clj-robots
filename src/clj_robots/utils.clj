@@ -1,8 +1,8 @@
 (ns clj-robots.utils
   (:require
+    [clojure.string :as s]
     [clojure.contrib.duck-streams :as ds]
-    [clojure.contrib.io :as io]
-    [clojure.contrib.str-utils2 :as su])
+    [clojure.contrib.io :as io])
   (:import
     [java.io StringWriter]
     [org.apache.commons.io IOUtils])
@@ -44,7 +44,7 @@
 (defn get-lines
   "Load a resource, convert it to a string, and return a vector of lines."
   [resource]
-  ((comp su/split-lines stream-to-string load-resource) resource))
+  ((comp s/split-lines stream-to-string load-resource) resource))
 
 (defn parse-int
   "Convert a String to an Integer."
@@ -54,7 +54,7 @@
 (defn parse-ratio
   "Convert a String to a Ratio."
   [s]
-  (let [t (map parse-int (su/split s #"/" 2))
+  (let [t (map parse-int (s/split s #"/" 2))
         p (first t)
         q (second t)]
     (cond (nil? p) nil
