@@ -45,8 +45,8 @@
 (defn- process-sitemap
   "Add a sitemap."
   [directives value]
-  (let [sitemap (mget @directives :sitemap)]
-    (dosync
+  (dosync
+    (let [sitemap (mget @directives :sitemap)]
       (alter directives assoc :sitemap (vec (conj sitemap value))))))
 
 (defn- parse-key
@@ -75,26 +75,26 @@
 (defn- parse-lines
   "Parse the lines of the robots.txt file."
   [lines]
-  (let [last-key (ref nil)
-        user-agents (ref #{"*"})
-        directives (ref {"*" []})]
-    (doseq [line lines]
-      (let [[key value] (parse-line line)]
-        (cond
-          (or (nil? key) (nil? value))
-            nil
-          (= key :user-agent)
-            (process-user-agent directives user-agents last-key value)
-          (= key :sitemap)
-            (process-sitemap directives value)
-          (contains? #{:allow :disallow} key)
-            (process-permission directives user-agents key value)
-          :default
-            (dosync (alter directives assoc key value)))
-        (dosync (ref-set last-key key))))
-    (dosync
-      (alter directives assoc :modified-time (System/currentTimeMillis)))
-    @directives))
+  (dosync
+    (let [last-key (ref nil)
+          user-agents (ref #{"*"})
+          directives (ref {"*" []})]
+      (doseq [line lines]
+        (let [[key value] (parse-line line)]
+          (cond
+            (or (nil? key) (nil? value))
+              nil
+            (= key :user-agent)
+              (process-user-agent directives user-agents last-key value)
+            (= key :sitemap)
+              (process-sitemap directives value)
+            (contains? #{:allow :disallow} key)
+              (process-permission directives user-agents key value)
+            :default
+              (alter directives assoc key value))
+          (ref-set last-key key)))
+      (alter directives assoc :modified-time (System/currentTimeMillis))
+    @directives)))
 
 (defmulti get-url
   "Returns the robots.txt URL for a particular host (given a URL)."
