@@ -23,3 +23,4 @@ Sitemap: http://www.lousycoder.com/sitemap1.xml
 
 Sitemap: http://www.lousycoder.com/sitemap2.xml
 
+Robot-version: Version 2.0
