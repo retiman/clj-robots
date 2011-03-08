@@ -86,6 +86,12 @@
     (is (not (crawlable? ds "/bar/")))
     (is (not (crawlable? ds "/bar/2.html")))))
 
+(deftest test-process-request-rate
+  (is (= (process-request-rate "1/10") 1/10))
+  (is (= (process-request-rate "1/10h") 1/36000))
+  (is (= (process-request-rate "1/10m") 1/600))
+  (is (= (process-request-rate "1/10s") 1/10)))
+
 (deftest
   ^{:integration true}
   test-get
