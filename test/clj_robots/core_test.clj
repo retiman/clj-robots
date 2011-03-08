@@ -20,7 +20,7 @@
 
 (deftest test-parse-lines
   (let [lines (get-lines "clj_robots/robots.txt")
-        expected {:request-rate (/ 1 5)
+        expected {:request-rate 1/300
                   :crawl-delay 10
                   :sitemap ["http://www.lousycoder.com/sitemap1.xml"
                             "http://www.lousycoder.com/sitemap2.xml"]

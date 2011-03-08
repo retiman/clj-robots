@@ -54,11 +54,14 @@
   (try (Integer/parseInt s) (catch NumberFormatException e nil)))
 
 (defn parse-ratio
-  "Convert a String to a Ratio."
+  "Convert a Request-rate to a Ratio.  The ratio represents the number of
+  documents that should be fetched per second (default).  If a time unit
+  other than seconds is used, then it is converted to seconds."
   [s]
-  (let [t (map parse-int (s/split s #"/" 2))
-        p (first t)
-        q (second t)]
-    (cond (nil? p) nil
-          (nil? q) nil
-          :default (/ p q))))
+  (let [m (case (last s) \h 3600 \m 60 \s 1 1)
+        t (first (s/split s #"[^0-9/]"))
+        [p q] (if-not (nil? t) (map parse-int (s/split t #"/" 2)))]
+    (cond
+      (nil? p) nil
+      (nil? q) nil
+      :default (/ p (* m q)))))
