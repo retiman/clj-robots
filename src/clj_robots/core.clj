@@ -25,19 +25,22 @@
 
 (defn- process-user-agent
   "Set the current user-agent and add it to the list of user-agents."
-  [directives user-agent value]
+  [directives user-agent last-key value]
   (dosync
-    (ref-set user-agent value)
     (alter directives assoc :sitemap [])
-    (alter directives assoc @user-agent [])))
+    (if (= @last-key :user-agent)
+      (alter user-agent conj value)
+      (ref-set user-agent #{value}))
+    (doseq [ua @user-agent]
+      (alter directives assoc ua []))))
 
 (defn- process-permission
   "Set an allow or disallow directive for the current user-agent."
   [directives user-agent key value]
-  (let [permissions (@directives @user-agent)]
-    (dosync
-      (alter directives
-             assoc @user-agent (vec (conj permissions [key value]))))))
+  (dosync
+    (doseq [ua @user-agent]
+      (let [permissions (@directives ua)]
+        (alter directives assoc ua (vec (conj permissions [key value])))))))
 
 (defn- process-sitemap
   "Add a sitemap."
@@ -72,7 +75,8 @@
 (defn- parse-lines
   "Parse the lines of the robots.txt file."
   [lines]
-  (let [user-agent (ref "*")
+  (let [last-key (ref nil)
+        user-agent (ref #{"*"})
         directives (ref {"*" []})]
     (doseq [line lines]
       (let [[key value] (parse-line line)]
@@ -80,13 +84,14 @@
           (or (nil? key) (nil? value))
             nil
           (= key :user-agent)
-            (process-user-agent directives user-agent value)
+            (process-user-agent directives user-agent last-key value)
           (= key :sitemap)
             (process-sitemap directives value)
           (contains? #{:allow :disallow} key)
             (process-permission directives user-agent key value)
           :default
-            (dosync (alter directives assoc key value)))))
+            (dosync (alter directives assoc key value)))
+        (dosync (ref-set last-key key))))
     (dosync
       (alter directives assoc :modified-time (System/currentTimeMillis)))
     @directives))
