@@ -9,7 +9,9 @@ User-agent: google
 Allow: /bif/baz/boo/
 Disallow: /moo/goo/too/
 
-User-agent: razzmatazz
+User-agent: foo
+User-agent: bar
+User-agent: baz
 Disallow: /mif/tif/psd/
 Allow: /gif/png/img/
 

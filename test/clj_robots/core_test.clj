@@ -33,7 +33,13 @@
                   "google"
                     [[:allow "/bif/baz/boo/"]
                      [:disallow "/moo/goo/too/"]]
-                  "razzmatazz"
+                  "foo"
+                    [[:disallow "/mif/tif/psd/"]
+                     [:allow "/gif/png/img/"]]
+                  "bar"
+                    [[:disallow "/mif/tif/psd/"]
+                     [:allow "/gif/png/img/"]]
+                  "baz"
                     [[:disallow "/mif/tif/psd/"]
                      [:allow "/gif/png/img/"]]}
         ds (parse-lines lines)
