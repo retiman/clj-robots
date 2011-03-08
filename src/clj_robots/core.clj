@@ -16,7 +16,14 @@
 (defvar- mget clojure.core/get)
 
 (defvar- directive-keys
-  #{"user-agent" "allow" "disallow" "crawl-delay" "request-rate" "sitemap"})
+  #{"user-agent"
+    "allow"
+    "disallow"
+    "crawl-delay"
+    "request-rate"
+    "robot-version"
+    "visit-time"
+    "sitemap"})
 
 (defn- trim-comment
   "Removes everything after the first # character in a String."
