@@ -56,7 +56,7 @@
     (let [sitemap (mget @directives :sitemap)]
       (alter directives assoc :sitemap (vec (conj sitemap value))))))
 
-(defn process-request-rate
+(defn- process-request-rate
   "Convert a Request-rate to a Ratio.  The ratio represents the number of
   documents that should be fetched per second (default).  If a time unit
   other than seconds is used, then it is converted to seconds."
@@ -69,6 +69,11 @@
       (nil? q) nil
       :default (/ p (* m q)))))
 
+(defn- process-visit-time
+  "TODO: Implement me!"
+  [s]
+  nil)
+
 (defn- parse-key
   "Parse the key in a directive."
   [key]
@@ -80,8 +85,9 @@
   "Parse the value in a directive."
   [key value]
   (cond (nil? value)          ""
-        (= key :crawl-delay)  ((comp utils/parse-int s/trim) value)
-        (= key :request-rate) ((comp process-request-rate s/trim) value)
+        (= key :crawl-delay)  (utils/parse-int (s/trim value))
+        (= key :request-rate) (process-request-rate (s/trim value))
+        (= key :visit-time)   (process-visit-time (s/trim value))
         :default              (s/trim value)))
 
 (defn- parse-line
