@@ -1,4 +1,4 @@
-(defproject clj-robots "0.5.0"
+(defproject clj-robots "0.5.1"
   :description "A robots.txt parser."
   :min-lein-version "1.4.2"
   :warn-on-reflection true
@@ -9,7 +9,7 @@
      [org.clojure/clojure-contrib "1.2.0"]
      [org.clojars.retiman/clj-time "0.3.0"]
      [commons-io "2.0"]
-     [clj-httpc "1.6.0-1"]]
+     [clj-httpc "1.7.0"]]
   :dev-dependencies
     [[autodoc "0.7.1"]
      [robert/hooke "1.1.0"]
