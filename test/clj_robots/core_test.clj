@@ -23,6 +23,7 @@
         expected {:request-rate 1/300
                   :crawl-delay 10
                   :robot-version "Version 2.0"
+                  :visit-time [[1 59] [2 3]]
                   :sitemap ["http://www.lousycoder.com/sitemap1.xml"
                             "http://www.lousycoder.com/sitemap2.xml"]
                   "*"
@@ -91,6 +92,10 @@
   (is (= (process-request-rate "1/10h") 1/36000))
   (is (= (process-request-rate "1/10m") 1/600))
   (is (= (process-request-rate "1/10s") 1/10)))
+
+(deftest test-process-visit-time
+  (is (= (process-visit-time "7:30 - 12:30") [[7 30] [12 30]]))
+  (is (= (process-visit-time "1:30-2:30") [[1 30] [2 30]])))
 
 (deftest
   ^{:integration true}

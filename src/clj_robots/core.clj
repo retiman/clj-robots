@@ -70,9 +70,19 @@
       :default (/ p (* m q)))))
 
 (defn- process-visit-time
-  "TODO: Implement me!"
+  "Convert the Visit-time directive to time intervals.
+
+  For example:
+    Visit-Time: 7:30 - 12:30
+
+  ...will be converted to:
+    [[7 30] [12 30]]"
   [s]
-  nil)
+  ((comp vec
+         (fn [x] (map #(map utils/parse-int %) x))
+         (fn [x] (map #(s/split % #":") x))
+         (fn [x] (map s/trim (s/split x #"-"))))
+         s))
 
 (defn- parse-key
   "Parse the key in a directive."
