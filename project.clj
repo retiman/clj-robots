@@ -7,7 +7,7 @@
   :dependencies
     [[org.clojure/clojure "1.2.0"]
      [org.clojure/clojure-contrib "1.2.0"]
-     [org.clojars.retiman/clj-time "0.3.0"]
+     [clj-time "0.3.0"]
      [commons-io "2.0"]
      [clj-httpc "1.7.0"]]
   :dev-dependencies
