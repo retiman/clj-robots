@@ -13,8 +13,7 @@
   :dev-dependencies
     [[autodoc "0.7.1"]
      [lein-clojars "0.6.0"]
-     [robert/hooke "1.1.0"]
-     [swank-clojure "1.2.1"]]
+     [robert/hooke "1.1.0"]]
   :test-selectors
     {:default (fn [t] (not (:integration t)))
      :integration :integration
