@@ -1,9 +1,7 @@
 (ns clj-robots.core
-  (:use
-    [clojure.contrib.def])
   (:require
     [clojure.string :as s]
-    [clojure.contrib.io :as io]
+    [clojure.java.io :as io]
     [clj-robots.utils :as utils])
   (:import
     [clojure.lang Sequential]

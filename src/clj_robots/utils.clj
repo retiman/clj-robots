@@ -1,8 +1,7 @@
 (ns clj-robots.utils
   (:require
     [clojure.string :as s]
-    [clojure.contrib.duck-streams :as ds]
-    [clojure.contrib.io :as io])
+    [clojure.java.io :as io])
   (:import
     [java.io StringWriter]
     [org.apache.commons.io IOUtils])
