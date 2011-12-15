@@ -1,14 +1,11 @@
 <html>
   <head>
-    <title>clj-robots.utils API reference (clj-robots)</title>
+    <title>clj-robots.utils - clj-robots nil API documentation</title>
     <link href="static/favicon.png" rel="icon" />
     <link href="static/favicon.png" rel="shortcut icon" />
     <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
     <link media="all" type="text/css" href="static/wiki.css" rel="stylesheet" />
     <link media="all" type="text/css" href="static/internal.css" rel="stylesheet" />
-    <!-- TODO: are we using these (from clojure.org)? If so, add the files -->
-    <script src="file/view/code_highlighter.js" type="text/javascript"></script>
-    <script src="file/view/clojure.js" type="text/javascript"></script>
     <style>.menuWrapper{height: 36px;}</style>
     <!--[if lte IE 6]>
     <link rel="stylesheet" href="http://www.wikispaces.com/_/2009051601/s/internal_ie.css" type="text/css" />
@@ -30,12 +27,19 @@ namespace.
       <div id="leftcolumn"><div style="text-align: center;"></div>
 <div class="menu">
   <div class="WikiCustomNav WikiElement wiki">
-    <a class="wiki_link" href="index.html">Overview</a><br />
-    <a class="wiki_link" href="api-index.html">API Index</a><br />
-    <a class="wiki_link" href="#">Namespaces:</a>
-    <ul id="left-sidebar-list">
-      <li><a href="clj-robots.core-api.html" class="wiki_link">clj-robots.core</a></li><li><a href="clj-robots.strategy.bing-api.html" class="wiki_link">clj-robots.strategy.bing</a></li><li><a href="clj-robots.strategy.extended-api.html" class="wiki_link">clj-robots.strategy.extended</a></li><li><a href="clj-robots.strategy.google-api.html" class="wiki_link">clj-robots.strategy.google</a></li><li><a href="clj-robots.utils-api.html" class="wiki_link">clj-robots.utils</a></li>
+    <span class="toc-header"><span id="project-name">clj-robots</span> <span id="version"></span> API</span><br />
+    <ul>
+      <li><a class="wiki_link" href="index.html">Overview</a></li>
+      <li><a class="wiki_link" href="api-index.html">API Index</a></li>
     </ul>
+    <div class="NamespaceTOC">
+      <span class="toc-header">Namespaces</span>
+      <ul id="left-sidebar-list">
+        <li><a href="clj-robots.core-api.html" class="wiki_link">clj-robots.core</a></li><li><a href="clj-robots.strategy.bing-api.html" class="wiki_link">clj-robots.strategy.bing</a></li><li><a href="clj-robots.strategy.extended-api.html" class="wiki_link">clj-robots.strategy.extended</a></li><li><a href="clj-robots.strategy.google-api.html" class="wiki_link">clj-robots.strategy.google</a></li><li><a href="clj-robots.utils-api.html" class="wiki_link">clj-robots.utils</a></li>
+      </ul>
+    </div>
+    
+    <a href="http://clojure.org" class="wiki_link">Clojure Home</a>
   </div>
 </div>
 </div>
@@ -54,8 +58,6 @@ namespace.
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#clj-robots.utils/parse-int">parse-int</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#clj-robots.utils/parse-ratio">parse-ratio</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#clj-robots.utils/stream-to-string">stream-to-string</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#clj-robots.utils/wildcard-to-regex">wildcard-to-regex</a>
@@ -64,15 +66,16 @@ namespace.
   </div>
 </div>
 </div>
-                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">clj-robots.utils</span></h1>
-by <span id="author">Unknown</span><br />
-<br />Usage:
-<pre>
-(ns your-namespace
-  (:require <span id="long-name">clj-robots.utils</span>))
-</pre><pre>
-</pre><h2>Overview</h2>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">clj-robots.utils</span>
+  - <span id="header-project">clj-robots</span> <span id="header-version"></span> (<span id="header-status"></span>)
+  </h1>
+
+<br />Full namespace name: <span id="long-name">clj-robots.utils</span>
+<p></p>
+<h2>Overview</h2>
 <pre id="namespace-docstr"></pre>
+
+
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
@@ -84,6 +87,8 @@ by <span id="author">Unknown</span><br />
 </pre>
   <pre id="var-docstr">Load a resource, convert it to a string, and return a vector of lines.</pre>
   
+  
+  
 </div><div id="var-entry">
   <br />
   <hr />
@@ -92,6 +97,8 @@ by <span id="author">Unknown</span><br />
   <pre id="var-usage">Usage: (load-resource path)
 </pre>
   <pre id="var-docstr">Return a resource located on path.</pre>
+  
+  
   
 </div><div id="var-entry">
   <br />
@@ -102,14 +109,7 @@ by <span id="author">Unknown</span><br />
 </pre>
   <pre id="var-docstr">Convert a String to an Integer.</pre>
   
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="clj-robots.utils/parse-ratio">parse-ratio</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (parse-ratio s)
-</pre>
-  <pre id="var-docstr">Convert a String to a Ratio.</pre>
+  
   
 </div><div id="var-entry">
   <br />
@@ -120,6 +120,8 @@ by <span id="author">Unknown</span><br />
 </pre>
   <pre id="var-docstr">Convert an InputStream to a String.</pre>
   
+  
+  
 </div><div id="var-entry">
   <br />
   <hr />
@@ -129,6 +131,8 @@ by <span id="author">Unknown</span><br />
 </pre>
   <pre id="var-docstr">Convert a wildcard pattern to a Java Pattern for matching paths.
 Note that .* is added to the end of the pattern for this reason.</pre>
+  
+  
   
 </div>
 
