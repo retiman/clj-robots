@@ -9,8 +9,4 @@
   :dev-dependencies
     [[backtype/autodoc "0.9.0-SNAPSHOT"]
      [lein-clojars "0.7.0"]
-     [robert/hooke "1.1.2"]]
-  :test-selectors
-    {:default (fn [t] (not (:integration t)))
-     :integration :integration
-     :all (fn [_] true)})
+     [robert/hooke "1.1.2"]])

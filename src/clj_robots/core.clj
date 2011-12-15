@@ -49,7 +49,7 @@
   "Add a sitemap."
   [directives value]
   (dosync
-    (let [sitemap (mget @directives :sitemap)]
+    (let [sitemap (get @directives :sitemap)]
       (alter directives assoc :sitemap (vec (conj sitemap value))))))
 
 (defn- process-request-rate
@@ -140,7 +140,7 @@
   disallow directive is consulted to determine if a path can be crawled."
   [directives ^String path & {:keys [user-agent] :or {user-agent "*"}}]
   (let [select-disallows #(= :disallow (first %))
-        permissions (filter select-disallows (mget directives user-agent))]
+        permissions (filter select-disallows (get directives user-agent))]
     (and (nil? (some #(.startsWith path (last %)) permissions))
          (if (not= "*" user-agent)
            (crawlable? directives path :user-agent "*")
