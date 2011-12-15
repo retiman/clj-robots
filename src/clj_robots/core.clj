@@ -1,19 +1,15 @@
 (ns clj-robots.core
-  (:refer-clojure :exclude (get))
   (:use
     [clojure.contrib.def])
   (:require
     [clojure.string :as s]
     [clojure.contrib.io :as io]
-    [clj-robots.utils :as utils]
-    [clj-httpc.client :as client])
+    [clj-robots.utils :as utils])
   (:import
     [clojure.lang Sequential]
     [java.io InputStream]
     [java.net URL])
   (:gen-class))
-
-(defvar- mget clojure.core/get)
 
 (defvar- directive-keys
   #{"user-agent"
@@ -133,20 +129,6 @@
 
 (defmethod get-url String [url]
   (get-url (io/as-url url)))
-
-(defmulti get
-  "Download robots.txt for a particular URL."
-  class)
-
-(defmethod get URL [url]
-  (try
-    (let [robots-url (get-url url)
-          response (client/get robots-url)]
-      (response :body))
-    (catch Exception e "")))
-
-(defmethod get String [url]
-  (get (io/as-url url)))
 
 (defn crawlable?
   "Returns true if a list of directives allows the path to be crawled using
