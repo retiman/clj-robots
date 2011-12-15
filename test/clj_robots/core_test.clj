@@ -1,5 +1,4 @@
 (ns clj-robots.core-test
-  (:refer-clojure :exclude (get))
   (:use
     [clj-robots.core]
     [clj-robots.utils :only (get-lines)]
@@ -91,9 +90,3 @@
   (is (= (process-request-rate "1/10h") 1/36000))
   (is (= (process-request-rate "1/10m") 1/600))
   (is (= (process-request-rate "1/10s") 1/10)))
-
-(deftest
-  ^{:integration true}
-  test-get
-  (let [robots ((comp parse get) "http://www.google.com")]
-    (is (not (crawlable? robots "/search")))))

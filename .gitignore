@@ -1,5 +1,7 @@
 /autodoc
 /classes
 /lib
-/*.jar
 /pom.xml
+/.lein-deps-sum
+/.lein-failures
+/*.jar

@@ -1,21 +1,17 @@
 (ns clj-robots.core
-  (:refer-clojure :exclude (get))
-  (:use
-    [clojure.contrib.def])
   (:require
     [clojure.string :as s]
-    [clojure.contrib.io :as io]
-    [clj-robots.utils :as utils]
-    [clj-httpc.client :as client])
+    [clojure.java.io :as io]
+    [clj-robots.utils :as utils])
   (:import
     [clojure.lang Sequential]
     [java.io InputStream]
     [java.net URL])
   (:gen-class))
 
-(defvar- mget clojure.core/get)
-
-(defvar- directive-keys
+(def
+  ^{:private true}
+  directive-keys
   #{"user-agent"
     "allow"
     "disallow"
@@ -53,7 +49,7 @@
   "Add a sitemap."
   [directives value]
   (dosync
-    (let [sitemap (mget @directives :sitemap)]
+    (let [sitemap (get @directives :sitemap)]
       (alter directives assoc :sitemap (vec (conj sitemap value))))))
 
 (defn- process-request-rate
@@ -134,20 +130,6 @@
 (defmethod get-url String [url]
   (get-url (io/as-url url)))
 
-(defmulti get
-  "Download robots.txt for a particular URL."
-  class)
-
-(defmethod get URL [url]
-  (try
-    (let [robots-url (get-url url)
-          response (client/get robots-url)]
-      (response :body))
-    (catch Exception e "")))
-
-(defmethod get String [url]
-  (get (io/as-url url)))
-
 (defn crawlable?
   "Returns true if a list of directives allows the path to be crawled using
   this interpretation of robots.txt:
@@ -158,7 +140,7 @@
   disallow directive is consulted to determine if a path can be crawled."
   [directives ^String path & {:keys [user-agent] :or {user-agent "*"}}]
   (let [select-disallows #(= :disallow (first %))
-        permissions (filter select-disallows (mget directives user-agent))]
+        permissions (filter select-disallows (get directives user-agent))]
     (and (nil? (some #(.startsWith path (last %)) permissions))
          (if (not= "*" user-agent)
            (crawlable? directives path :user-agent "*")
@@ -183,18 +165,3 @@
 (defmethod parse
   nil [arg]
   nil)
-
-(def
-  ^{:doc "DEPRECATED: Prefer get."
-    :deprecated "0.5.0"}
-  get-robots get)
-
-(def
-  ^{:doc "DEPRECATED: Prefer get-url."
-    :deprecated "0.5.0"}
-  get-robots-url get-url)
-
-(def
-  ^{:doc "DEPRECATED: Prefer parse."
-    :deprecated "0.5.0"}
-  parse-robots parse)
