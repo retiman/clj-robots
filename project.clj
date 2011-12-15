@@ -9,4 +9,5 @@
   :dev-dependencies
     [[backtype/autodoc "0.9.0-SNAPSHOT"]
      [lein-clojars "0.7.0"]
-     [robert/hooke "1.1.2"]])
+     [robert/hooke "1.1.2"]
+     [clj-http "0.2.6"]])

@@ -3,17 +3,29 @@ DESCRIPTION
 A robots.txt parser.  See <http://www.robotstxt.org/>.  Support for different
 interpretations forthcoming.
 
+CHANGES
+=======
+
+0.6.0
+-----
+* Removed deprecated API.
+* Removed dependency on [clj-httpc](https://github.com/retiman/clj-httpc) library.
+* Removed `get` API; use [clj-http](https://github.com/dakrone/clj-http) or a different library for your HTTP requests.
+
 USAGE
 =====
 To use, include this in your Clojure program:
 
-    (require '[clojure.contrib.io :as io])
+    (require '[clj-http.client :as client])
     (require '[clj-robots.core :as robots])
 
 Save robots.txt from a website:
 
     (def robots
-      ((comp robots/parse robots/get io/as-url) "http://www.google.com"))
+      ((comp robots/parse
+             #(get % :body)
+             client/get)
+         "http://www.google.com/robots.txt"))
     -> #'user/robots
 
 Now check if any paths are crawlable:
