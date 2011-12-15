@@ -2,8 +2,6 @@
   :description "A robots.txt parser."
   :min-lein-version "1.6.2"
   :warn-on-reflection true
-  :repositories
-    {"clojars" "http://clojars.org/repo"}
   :dependencies
     [[org.clojure/clojure "1.3.0"]
      [clj-time "0.3.3"]
