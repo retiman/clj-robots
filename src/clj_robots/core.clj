@@ -11,7 +11,9 @@
     [java.net URL])
   (:gen-class))
 
-(defvar- directive-keys
+(def
+  ^{:private true}
+  directive-keys
   #{"user-agent"
     "allow"
     "disallow"
