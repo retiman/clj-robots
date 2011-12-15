@@ -183,18 +183,3 @@
 (defmethod parse
   nil [arg]
   nil)
-
-(def
-  ^{:doc "DEPRECATED: Prefer get."
-    :deprecated "0.5.0"}
-  get-robots get)
-
-(def
-  ^{:doc "DEPRECATED: Prefer get-url."
-    :deprecated "0.5.0"}
-  get-robots-url get-url)
-
-(def
-  ^{:doc "DEPRECATED: Prefer parse."
-    :deprecated "0.5.0"}
-  parse-robots parse)
